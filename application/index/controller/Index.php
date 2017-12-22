@@ -1,10 +1,11 @@
 <?php
 namespace app\index\controller;
 
-class Index
+class Index extends Domain
 {
     public function index()
-    {
-        echo "欢迎来到tp5";
+    {       
+			return view('index');
     }
+    
 }

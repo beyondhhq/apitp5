@@ -1,0 +1,41 @@
+.content-header>.breadcrumb {
+    float: none; 
+    background: transparent;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    padding: 7px 10px;
+    position: relative; 
+    /* top: 15px; */
+    /* right: 10px; */
+    border-radius: 2px;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 8px;
+    white-space: nowrap;
+    display: none;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    display: none;
+}
+.box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+    display: none;
+}
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #3c8dbc;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}

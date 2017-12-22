@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>智慧程后台管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {include file="inccss" /}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+        @media (min-width: 992px) {
+            .col-md-6 {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            {include file="header" /}
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            {include file="leftmenu" /}
+        </aside>
+        <!-- 管理员列表页 -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    添加管理员
+                    <!-- <small>Preview</small> -->
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> 首页</a>
+                    </li>
+                    <li class="active">添加管理员</li>
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">填写表单</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="box-body">
+                                    <div class="form-group" style="width: 40%;">
+                                        <label for="exampleUserName">用户名</label>
+                                        <input type="name" class="form-control" id="exampleUserName" placeholder="请输入用户名">
+                                        <p class="help-block0"></p>
+                                    </div>
+                                    <div class="form-group" style="width: 40%;">
+                                        <label for="exampleUserNumber">账号</label>
+                                        <input type="email" class="form-control" id="exampleUserNumber" placeholder="请输入账号">
+                                        <p class="help-block1"></p>
+                                    </div>
+                                    <div class="form-group" style="width: 40%;">
+                                        <label for="examplePassword1">密码</label>
+                                        <input type="password" class="form-control" id="examplePassword1" placeholder="请输入密码">
+                                        <p class="help-block2"></p>
+                                    </div>
+                                    <div class="form-group" style="width: 40%;">
+                                        <label for="examplePassword2">确认密码</label>
+                                        <input type="password" class="form-control" id="examplePassword2" placeholder="请再次输入密码">
+                                        <p class="help-block3"></p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>权限：</label>
+                                        <br>
+                                        <?php foreach($auth as $k=>$v){?>
+                                        <input type="checkbox" class="minimal one" id="<?php echo $v['id']?>">&nbsp;&nbsp;
+                                        <?php echo $v['authname']?>&nbsp;&nbsp;
+                                        <?php foreach($v['son'] as $k1=>$v1){?>
+                                        <span class="one">
+                                            <input type="checkbox" class="minimal" id="<?php echo $v1['id']?>">&nbsp;&nbsp;
+                                            <?php echo $v1['authname']?>
+                                        </span>
+
+                                        <?php }?>
+                                        <br>
+                                        <?php }?>
+
+                                    </div>
+
+                                    <!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <button type="button" class="btn btn-primary">确定</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box -->
+
+
+
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+
+                    <!--/.col (right) -->
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        {include file="footer" /}
+        <!-- Control Sidebar -->
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 3 -->
+    {include file="incjs" /}
+    <!-- page script -->
+    <script>
+        $(function () {
+            // 当前下拉效果
+            $(".treeview").eq(5).addClass('active').siblings().removeClass('active');
+            $(".treeview").eq(5).addClass('menu-open').siblings().removeClass('menu-open');
+            $(".treeview").eq(5).children('.treeview-menu').children('li').eq(1).addClass('active').siblings().removeClass(
+                'active');
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true
+            });
+
+            //iCheck for checkbox and radio inputs
+            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                checkboxClass: 'icheckbox_minimal-blue',
+                checkedClass: 'checked'
+            });
+            var checkid = "";
+            // 正选
+            $('#1').on('ifChecked', function (event) {
+                $('#9').iCheck('check');
+            });
+            $('#9').on('ifChecked', function (event) {
+                $('#1').iCheck('check');
+            });
+            $('#1').on('ifUnchecked', function (event) {
+                $('#9').iCheck('uncheck');
+            });
+            $('#9').on('ifUnchecked', function (event) {
+                $('#1').iCheck('uncheck');
+            });
+
+
+            $('#2').on('ifChecked', function (event) {
+                $('#10').iCheck('check');
+                $('#11').iCheck('check');
+            });
+            $('#2').on('ifUnchecked', function (event) {
+                $('#10').iCheck('uncheck');
+                $('#11').iCheck('uncheck');
+            });
+
+
+            $('#3').on('ifChecked', function (event) {
+                $('#12').iCheck('check');
+                $('#13').iCheck('check');
+                $('#14').iCheck('check');
+            });
+            $('#3').on('ifUnchecked', function (event) {
+                $('#12').iCheck('uncheck');
+                $('#13').iCheck('uncheck');
+                $('#14').iCheck('uncheck');
+            });
+
+
+            $('#4').on('ifChecked', function (event) {
+                $('#15').iCheck('check');
+                $('#16').iCheck('check');
+                $('#17').iCheck('check');
+            });
+            $('#4').on('ifUnchecked', function (event) {
+                $('#15').iCheck('uncheck');
+                $('#16').iCheck('uncheck');
+                $('#17').iCheck('uncheck');
+            });
+
+
+            $('#5').on('ifChecked', function (event) {
+                $('#18').iCheck('check');
+                $('#19').iCheck('check');
+            });
+            $('#5').on('ifUnchecked', function (event) {
+                $('#18').iCheck('uncheck');
+                $('#19').iCheck('uncheck');
+            });
+
+
+            $('#6').on('ifChecked', function (event) {
+                $('#7').iCheck('check');
+                $('#8').iCheck('check');
+                $('#20').iCheck('check');
+                $('#21').iCheck('check');
+            });
+            $('#6').on('ifUnchecked', function (event) {
+                $('#7').iCheck('uncheck');
+                $('#8').iCheck('uncheck');
+                $('#20').iCheck('uncheck');
+                $('#21').iCheck('uncheck');
+            });
+
+            //    密码验证
+            $("input[type='text']").focus(function () {
+                $(this).val("");
+            });
+            $("input[type='password']").focus(function () {
+                $(this).val("");
+            });
+            var str = "",
+                arr = [],
+                name = "",
+                number = "",
+                pw1 = "",
+                pw2 = "";
+
+            // 点击确定
+            $('.btn').click(function () {
+                $('.icheckbox_minimal-blue.checked').each(function () {
+                    arr.push($(this).children('input[type="checkbox"]').attr("id"));
+                });
+                for (var i in arr) { //获取
+                    arr[i];
+                }
+                str = arr.join(","); //转成数组
+                console.log(str);
+
+                $.post('http://admin.tp5.com/index/system/adminruku', {
+                    names: name,
+                    username: number,
+                    password: pw1,
+                    rpassword: pw2,
+                    auth: str
+                }, function (data) {
+                    console.log(data);
+                    // 用户名
+                    name = $('#exampleUserName').val();
+                    // 账号
+                    number = $('#exampleUserNumber').val();
+                    // 密码
+                    pw1 = $('#examplePassword1').val();
+                    // 确认密码
+                    pw2 = $('#examplePassword2').val();
+                    if (name == "") {
+                        $('.help-block0').html("不能为空！");
+                        $('.btn').attr("type", "button");
+                    } else {
+                        $('.help-block0').html("");
+                    }
+                    if (number == "") {
+                        $('.help-block1').html("不能为空！");
+                        $('.btn').attr("type", "button");
+                    } else {
+                        $('.help-block1').html("");
+                    }
+                    if (pw1 == "") {
+                        $('.help-block2').html("不能为空！");
+                        $('.btn').attr("type", "button");
+                    } else {
+                        $('.help-block2').html("");
+                    }
+                    if (pw2 == "") {
+                        $('.help-block3').html("不能为空！");
+                        $('.btn').attr("type", "button");
+                    } else {
+                        $('.help-block3').html("");
+                    }
+                    if (pw1 != pw2) {
+                        $('.help-block3').html("密码不一致！");
+                        $('.btn').attr("type", "button");
+                    } else {
+                        $('.help-block3').html("");
+                    }
+                    if (data.status == 0) {
+                        $(".help-block3").html(data.msg);
+                    } else if (data.status == 1 && name != "" && number != "" && pw1 != "" &&
+                        pw2 != "") {
+                        alert("添加成功！");
+                        $('.btn').attr("type", "submit");
+                        window.location.href = "http://admin.tp5.com/index/system/index.html"
+                    }
+                })
+            })
+        });
+    </script>
+    <script>
+    </script>
+</body>
+
+</html>

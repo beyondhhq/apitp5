@@ -1,0 +1,81 @@
+<?php
+use think\Session;
+use think\Db;
+
+$id=Session::get('uid');
+$res=Db::table('admins')->where('id',$id)->find();
+if($res['powers']=='super'){
+  $where['pid']=0;
+  $resauth=Db::table('admin_auth')->field('id,authname,pid,path,icon')->where($where)->select();          
+          foreach($resauth as $k=>$v){
+             $wher['pid']=$v['id'];
+             $sonres=Db::table('admin_auth')->field('id,authname,pid,path')->where($wher)->select();
+             $newarr[$k]['id']=$v['id'];
+             $newarr[$k]['authname']=$v['authname'];
+             $newarr[$k]['path']=$v['path'];
+             $newarr[$k]['icon']=$v['icon'];
+             $newarr[$k]['son']=$sonres;
+          }
+          
+}else{
+  $power=$res['powers'];
+  $sql="select * from (select * from admin_auth where id in ($power)) as a where pid=0";
+  $resauth=Db::query($sql);
+          foreach($resauth as $k=>$v){
+             $wher['pid']=$v['id'];
+             $sonres=Db::table('admin_auth')->field('id,authname,pid,path,icon')->where($wher)->select();
+             $newarr[$k]['id']=$v['id'];
+             $newarr[$k]['authname']=$v['authname'];
+             $newarr[$k]['path']=$v['path'];
+             $newarr[$k]['icon']=$v['icon'];
+             $newarr[$k]['son']=$sonres;
+          } 
+}
+
+?>
+<section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+          <!-- <div class="pull-left image">
+            <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          </div> -->
+          <!-- <div class="pull-left info">
+            <p>刘XX</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div> -->
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                  <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                  </button>
+                </span>
+          </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+          <!-- <li class="header">主导航</li> -->
+
+
+         <?php foreach($newarr as $k=>$v){?>
+          <li class="treeview">
+            <a href="#">
+              <i class="<?php echo $v['icon']?>"></i> 
+              <span><?php echo $v['authname']?></span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu"> 
+            <?php foreach($v['son'] as $k1=>$v1){?>
+               <li><a href="<?php echo $v1['path']?>"><?php echo $v1['authname']?></a></li>
+            <?php }?>
+            </ul>
+          </li>
+
+         <?php }?>
+        </ul>
+      </section>
