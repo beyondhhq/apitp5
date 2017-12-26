@@ -62,38 +62,47 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            
               <div class="box-body">
-                <div class="form-group" style="width:40%;">
+                <div  class="col-xs-12">
                   <label for="exampleSchoolName">名称</label>
                   <input type="name" class="form-control" id="exampleSchoolName" placeholder="请输入名称">
                 </div>
-                <div class="form-group" style="width:40%;">
-                  <label for="exampleProvince">省份</label>
-                  <select class="form-control">
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                  </select>
-                  <!-- <input type="email" class="form-control" id="exampleProvince" placeholder="请输入邮箱"> -->
-                </div>
-                <div class="form-group" style="width:40%;">
-                  <label for="exampleType">性质</label>
-                  <select class="form-control">
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                  </select>
-                  <!-- <input type="email" class="form-control" id="exampleProvince" placeholder="请输入邮箱"> -->
-                </div>
-                <div class="form-group" style="width:40%;">
+                <div  class="col-xs-12">
                   <label for="exampleInputAddress">地址</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入地址">
+                  <input type="name" class="form-control" id="url" placeholder="请输入url地址">
                 </div>
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">确定</button>
-              </div>
-            </form>
+                <div  class="col-xs-4">
+                  <label for="exampleProvince">省</label>
+                  <select class="form-control" id="sheng">
+                    <option value="1">请选择</option>
+                    <?php foreach($data as $k=>$v){?>
+                    <option value="<?php echo $v['ProvincesID']?>"><?php echo $v['ProvincesName']?></option>
+                    <?php }?>
+                  </select>
+                  <!-- <input type="email" class="form-control" id="exampleProvince" placeholder="请输入邮箱"> -->
+                </div>
+                <div  class="col-xs-4">
+                  <label for="exampleProvince">市</label>
+                  <select class="form-control" id="shi">
+                    <option value="1">请选择</option>
+                  </select>
+                  <!-- <input type="email" class="form-control" id="exampleProvince" placeholder="请输入邮箱"> -->
+                </div>
+                <div  class="col-xs-4">
+                  <label for="exampleProvince">区</label>
+                  <select class="form-control" id="zone">
+                    <option value="1">请选择</option>
+                  </select>
+                  <!-- <input type="email" class="form-control" id="exampleProvince" placeholder="请输入邮箱"> -->
+                </div>
+                <br>
+                <div class="col-xs-12">
+                    <label for="exampleProvince"></label>
+                    <button class="btn btn-primary btn-block btn-flat" id="confirmadd">确认添加</button>
+                </div>
+              
+            
           </div>
           <!-- /.box -->
 
@@ -140,6 +149,69 @@
       radioClass   : 'iradio_minimal-blue'
     })
   })
+  $("#sheng").change(function() {
+    var sheng = $("#sheng").val();
+            $.post("/index/school/getcity",
+            {
+               proid:sheng
+          
+            },
+            function(data){
+              $("#shi").html(data);
+            });
+  });
+
+  $("#shi").change(function() {
+    var shi = $("#shi").val();
+            $.post("/index/school/getzone",
+            {
+               cityid:shi
+          
+            },
+            function(data){
+              $("#zone").html(data);
+            });
+  });
+  $("#confirmadd").click(function(){
+     var sheng = $("#sheng").val();
+     var shi = $("#shi").val();
+     var zone = $("#zone").val();
+     var name = $('#exampleSchoolName').val();
+     var url = $('#url').val();
+     if(name==""){
+       alert("请输入学校名称！");
+     }
+     else if(sheng==1){
+       alert("请选择省份！");
+     }else if(shi==1){
+       alert("请选择市！");
+
+     }else if(zone==1){
+       alert("请选择区县！");
+     }else{
+      
+        $.post("/index/school/confirmadd",{
+           schname:name,
+           url:url,
+           provid:sheng,
+           cityid:shi,
+           zoneid:zone
+        },function(data){
+
+     
+            if(data==1){
+               alert("添加学校成功");
+               window.location.href = "/index/school/schoollist";
+            }else{
+               alert("添加失败！"); 
+            }
+
+
+        });
+     }
+  
+     
+  });
 </script>
 </body>
 </html>

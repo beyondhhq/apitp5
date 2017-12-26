@@ -90,7 +90,7 @@
                                                   <a href="adminDetail.html?id={$ainfo.id}">详情</a>&nbsp;&nbsp;
                                                 <?php }else{?>
                                                   <a href="adminDetail.html?id={$ainfo.id}">详情</a>&nbsp;&nbsp;
-                                                  <a href="" class="removeBtn">删除</a>
+                                                  <a href="#" class="removeBtn">删除</a>
                                                 <?php }?>
                                             </td>
                                         </tr>
@@ -154,11 +154,21 @@
 
             // 删除
             $(".removeBtn").click(function(){
-               var ids= $(this).parent("").siblings(".ids").html();
-               console.log(ids);
-               $.post("",{id:ids},function(){
-
-               })
+				
+				if(confirm("确定要删除吗？"))
+                {
+                  var ids= $(this).parent("").siblings(".ids").html();
+                   console.log(ids);
+                   $.post("/index/system/admindel",{id:ids},function(data){
+                    if(data.status==1){
+						alert(data.msg);
+						 window.location.href = "/index/system/index";
+					 }else{
+						 alert(data.msg);
+						 }
+                    })
+                }
+               
             })
 
         })

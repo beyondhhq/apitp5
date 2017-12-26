@@ -105,9 +105,11 @@
                          echo "<font color='green'>未发送</font";
                        }?></td>
                        <td>
-                        <a href="#">发送</a>
+                        <input type="hidden" value="{$vo.is_send}">
+                        <a href="#" class="send">发送</a>
+                        <input type="hidden" value="{$vo.id}">
                        </td>
-                       <input type="hidden" value="{$vo.id}">
+                      
                      </tr>
                     {/foreach}
 
@@ -176,6 +178,30 @@
           'infoFiltered': '(过滤总件数 _MAX_ 条)'
         }
       })
+	  $(".send").click(function(){
+				
+				if(confirm("确定已发送了吗？"))
+                {
+                  var ids= $(this).next().val();
+				  var status=$(this).prev().val();
+                   console.log(ids);
+				   if(status==1){
+					   alert("此红包已发送");
+					   }else{
+						   $.post("/index/system/redsend",{id:ids},function(data){
+                              if(data.status==1){
+						        alert(data.msg);
+						        window.location.href = "/index/system/redenvelopelist";
+					          }else{
+						        alert(data.msg);
+						      }
+                             })
+						   
+						   }
+                   
+                }
+               
+            })
       
     })
   </script>

@@ -146,6 +146,25 @@ class System extends Domain
             return $this->fetch('adminDetail');
               
     }
+    public function redsend(){
+           $request=request();
+           $id=$request->post('id');
+           $dat['is_send']=1;
+           $where['id']=$id;
+           $res=$this->D('redpacket')->where($where)->update($dat);
+           if($res){
+              $data['status']=1;
+              $data['msg']="发送成功！";
+           }else{
+              $data['status']=0;
+              $data['msg']="发送失败！";
+           }
+
+           return $data;
+
+
+
+    }
     public function admindel(){
            
            $request=request();

@@ -69,6 +69,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>序列</th>
                   <th>学校ID</th>
                   <th>学校名称</th>
                   <th>所属省份</th>
@@ -77,77 +78,18 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php foreach($data as $k=>$v){?>
                 <tr>
-                  <td>1</td>
-                  <td>河北一中</td>
-                  <td>河北</td>
-                  <td>2017-11-20</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
+                  <td><?php echo $k+1;?></td>
+                  <td><?php echo $v['id'];?></td>
+                  <td><?php echo $v['names'];?></td>
+                  <td><?php echo $v['proname'];?></td>
+                  <td><?php echo $v['instime'];?></td>
+                  <td><a href="schoolDetail.html?id=<?php echo $v['id']?>">详情</a></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>保定二中</td>
-                  <td>河北</td>
-                  <td>2017-11-01</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>河南三中</td>
-                  <td>河南</td>
-                  <td>2017-10-10</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>湖北三中</td>
-                  <td>湖北</td>
-                  <td>2016-05-03</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>广东五中</td>
-                  <td>广东</td>
-                  <td>2015-09-02</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>陕西六中</td>
-                  <td>陕西</td>
-                  <td>2015-09-03</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>山西七中</td>
-                  <td>山西</td>
-                  <td>2015-09-04</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>山东八中</td>
-                  <td>山东</td>
-                  <td>2015-09-05</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                 <tr>
-                  <td>9</td>
-                  <td>吉林九中</td>
-                  <td>吉林</td>
-                  <td>2015-09-06</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                 <tr>
-                  <td>10</td>
-                  <td>辽宁十中</td>
-                  <td>辽宁</td>
-                  <td>2015-09-07</td>
-                  <td><a href="schoolDetail.html">操作</a></td>
-                </tr>
-                </tfoot>
+                <?php }?>
+                          
+                </tbody>
               </table>
             </div>
             <!-- /.box-body -->

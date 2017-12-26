@@ -75,7 +75,7 @@ class User extends Domain
     	    }else{
     	       $res['child']="";
     	    }
-    	    print_R($res);
+    	   
             $this->assign("data",$res);
 			return view('parentDetail');
     }

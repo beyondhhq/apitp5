@@ -83,6 +83,7 @@
                                         <label for="examplePassword2">确认密码</label>
                                         <input type="password" class="form-control" id="examplePassword2" placeholder="请再次输入密码">
                                         <p class="help-block3"></p>
+                                        <p class="help-block4"></p>
                                     </div>
 
                                     <div class="form-group">
@@ -253,62 +254,79 @@
                 }
                 str = arr.join(","); //转成数组
                 console.log(str);
-
-                $.post('http://admin.tp5.com/index/system/adminruku', {
-                    names: name,
-                    username: number,
-                    password: pw1,
-                    rpassword: pw2,
-                    auth: str
-                }, function (data) {
-                    console.log(data);
-                    // 用户名
-                    name = $('#exampleUserName').val();
+				    name = $('#exampleUserName').val();
                     // 账号
                     number = $('#exampleUserNumber').val();
                     // 密码
                     pw1 = $('#examplePassword1').val();
                     // 确认密码
                     pw2 = $('#examplePassword2').val();
+					
+					
                     if (name == "") {
                         $('.help-block0').html("不能为空！");
                         $('.btn').attr("type", "button");
-                    } else {
-                        $('.help-block0').html("");
-                    }
-                    if (number == "") {
+                    } 
+                    else if (number == "") {
                         $('.help-block1').html("不能为空！");
                         $('.btn').attr("type", "button");
-                    } else {
-                        $('.help-block1').html("");
-                    }
-                    if (pw1 == "") {
+                    } 
+                    else if (pw1 == "") {
                         $('.help-block2').html("不能为空！");
                         $('.btn').attr("type", "button");
-                    } else {
-                        $('.help-block2').html("");
                     }
-                    if (pw2 == "") {
+                    else if (pw2 == "") {
                         $('.help-block3').html("不能为空！");
                         $('.btn').attr("type", "button");
-                    } else {
-                        $('.help-block3').html("");
-                    }
-                    if (pw1 != pw2) {
-                        $('.help-block3').html("密码不一致！");
+                    } 
+                    else if (pw1 != pw2) {
+                        $('.help-block4').html("两次输入的密码不一致！");
                         $('.btn').attr("type", "button");
-                    } else {
+                    }else{
+						
+					    
+						$.post("/index/system/adminruku",{
+							 names:name,
+							 username:number,
+							 password:pw1,
+							 rpassword:pw2,
+							 auth:str						
+							},function(data){
+							   if(data.status==1){
+								    alert(data.msg);
+									window.location.href = "/index/system/index";
+								   }else{
+									   alert(data.msg);
+									   }
+							
+							});
+					
+					}
+					
+					
+					if (name != "") {
+                        $('.help-block0').html("");
+                        $('.btn').attr("type", "button");
+                    } 
+                    if (number != "") {
+                        $('.help-block1').html("");
+                        $('.btn').attr("type", "button");
+                    } 
+                    if (pw1 != "") {
+                        $('.help-block2').html("");
+                        $('.btn').attr("type", "button");
+                    }
+                    if (pw2 != "") {
                         $('.help-block3').html("");
-                    }
-                    if (data.status == 0) {
-                        $(".help-block3").html(data.msg);
-                    } else if (data.status == 1 && name != "" && number != "" && pw1 != "" &&
-                        pw2 != "") {
-                        alert("添加成功！");
-                        $('.btn').attr("type", "submit");
-                        window.location.href = "http://admin.tp5.com/index/system/index.html"
-                    }
-                })
+                        $('.btn').attr("type", "button");
+                    } 
+					if (pw2 == pw1) {
+                        $('.help-block4').html("");
+                        $('.btn').attr("type", "button");
+                    } 
+                    
+
+                
             })
         });
     </script>

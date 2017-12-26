@@ -25,7 +25,7 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
+<div class="wrapper">
         <header class="main-header">
             {include file="header" /}
         </header>
@@ -56,63 +56,207 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                    <!-- left column -->
-                    <div class="col-md-6">
-                        <!-- general form elements -->
-                        <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">详情</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <!-- form start -->
-                            <form role="form">
-                                <div class="box-body">
+                  <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                       <ul class="nav nav-tabs">
+                         <li class="active"><a href="#baseinfo" data-toggle="tab">基本信息</a></li>
+                         <li><a href="#terminfo" data-toggle="tab">学期信息</a></li>
+                         <li><a href="#classinfo" data-toggle="tab">教室信息</a></li>
+                         <li><a href="#peizhi" data-toggle="tab">配置信息</a></li>
+                       </ul>
+                       <div class="tab-content">
+                         <div class="active tab-pane" id="baseinfo">
                                     <div class="form-group" style="width: 40%;">
-                                        <label for="exampleSchoolName">名称：</label>衡水一中
+                                        <label for="exampleUserName">学校id：</label>{$baseinfo.id}
                                     </div>
                                     <div class="form-group" style="width: 40%;">
-                                        <label for="exampleProvince">省份：</label>河北省
+                                        <label for="exampleUserName">学校名称：</label>{$baseinfo.names}
                                     </div>
                                     <div class="form-group" style="width: 40%;">
-                                        <label for="exampleProvince">注册时间：</label>2017-1-1
+                                        <label for="exampleNumber">所在省：</label>{$baseinfo.proname}
                                     </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleProvince">注册学生数：</label>500
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleProvince">:注册教师数：</label>50
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleProvince">注册家长数：</label>600
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleProvince">到期日期：</label>2019-1-1
-                                    </div>
-                                </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <span>注册时间：</span>
+                                            <span style="font-weight:normal;">{$baseinfo.instime}</span>
+                                        </label>
 
-                            </form>
-                        </div>
-
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!--/.col (left) -->
-                <!-- right column -->
-                
-                <!--/.col (right) -->
+                                    </div> 
+                                    <div class="form-group" style="width: 40%;">
+                                        <label for="exampleNumber">学校网址：</label>{$baseinfo.logourl}
+                                    </div>
+                                    
+                         </div>    
+                         <div class="tab-pane" id="terminfo">  
+                                    
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>序列</th>
+                  <th>学年</th>
+                  <th>学期名称</th>
+                  <th>开始日期</th>
+                  <th>结束日期</th>
+                  <th>是否当前学习</th>
+                  <th>录入时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                   <th>1</th>
+                   <th>2017</th>
+                   <th>第一学期</th>
+                   <th>2017-9</th>
+                   <th>2018-2</th>
+                   <th>是</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                  <tr>
+                   <th>2</th>
+                   <th>2017</th>
+                   <th>第二学期</th>
+                   <th>2018-3</th>
+                   <th>2018-7</th>
+                   <th>否</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                          
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
-        <!-- /.row -->
-        </section>
-        <!-- /.content -->
-    </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+                         </div>
+                         <div class="tab-pane" id="classinfo">
+                                    <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>序列</th>
+                  <th>教室名称</th>
+                  <th>教室位置</th>
+                  <th>教室容量</th>
+                  <th>教室类型</th>
+                  <th>录入时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                   <th>1</th>
+                   <th>201</th>
+                   <th>6号教学楼2层</th>
+                   <th>100人</th>
+                   <th>普通教室</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                  <tr>
+                   <th>2</th>
+                   <th>202</th>
+                   <th>6号教学楼2层</th>
+                   <th>100人</th>
+                   <th>普通教室</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                  <tr>
+                   <th>3</th>
+                   <th>308</th>
+                   <th>6号教学楼3层</th>
+                   <th>200人</th>
+                   <th>会议室</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                          
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+                         </div>
+                         <div class="tab-pane" id="peizhi"> 
+                                    <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>序列</th>
+                  <th>配置类型</th>
+                  <th>配置值</th>
+                  <th>序号</th>
+                  <th>录入时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                   <th>1</th>
+                   <th>上午上课节数</th>
+                   <th>5节</th>
+                   <th>10</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                  <tr>
+                   <th>2</th>
+                   <th>下午午上课节数</th>
+                   <th>6节</th>
+                   <th>10</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                  <tr>
+                   <th>3</th>
+                   <th>学校上课天数</th>
+                   <th>7天</th>
+                   <th>10</th>
+                   <th>2017-12-22</th>
+                  </tr>
+                 
+                          
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+                         </div>
+                       </div>         
+                    </div>      
+                  </div> 
+                </div>               
+            </section>
+        </div>
     <!-- /.content-wrapper -->
     {include file="footer" /}
     <!-- Control Sidebar -->
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
-    </div>
+     <div class="control-sidebar-bg"></div>
+</div>
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
     {include file="incjs" /}
