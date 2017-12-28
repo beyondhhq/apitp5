@@ -63,45 +63,40 @@
                             <!-- form start -->
 
                             <div class="box-body">
-                                <div class="form-group" style="width:40%;">
+                                <div class="form-group" >
                                     <label style="display: inline-block;">类型</label>
 
-                                    <select class="form-control select2" style="display: inline-block;width: 132px;">
-                                        <option selected="selected">学业生涯规划</option>
-                                        <option>学习成绩提升</option>
+                                    <select class="form-control select2" style="display: inline-block;width:100%;" id="select">
+                                        <?php foreach($list as $k=>$v){?>
+                                          <option value="<?php echo $v['id']?>"><?php echo $v['names']?></option>
+                                        <?php }?>
                                     </select>
                                 </div>
-                                <div class="form-group" style="width:40%;">
+                                <div class="form-group" >
                                     <label style="display: inline-block;">题目</label>
 
-                                    <input type="text" class="form-control" placeholder="题目名称" style="display: inline-block;width: 132px;">
+                                    <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
                                 </div>
                             </div>
-                            <div class="box-header">
-                                <h3 class="box-title">内容
-                                    <!-- <small>Advanced and full of features</small> -->
-                                </h3>
-                                <!-- tools box -->
-                                <div class="pull-right box-tools">
-                                    <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                                <!-- /. tools -->
-                            </div>
+                            
                             <!-- /.box-header -->
                             <div class="box-body pad">
-                                <form>
-                                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                                        在这里填写.
-                                    </textarea>
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">确定</button>
+                          
+                                    <div id="container" name="content" type="text/plain" style="height:420px;width:100%;">
+                                        
                                     </div>
-                                </form>
+                                    <!-- 配置文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
+                                    <!-- 编辑器源码文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.all.js"></script>
+                                      <!-- 实例化编辑器 -->
+                                    <script type="text/javascript">
+                                      var ue = UE.getEditor('container');
+                                    </script>
+                                    
+                                      <label for="exampleProvince"></label>
+                                      <button class="btn btn-primary btn-block btn-flat" id="confirmadd">确认添加</button>
+
                             </div>
                             <!-- /.box-body -->
 
@@ -150,11 +145,42 @@
                 radioClass: 'iradio_minimal-blue'
             });
 
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
-            CKEDITOR.replace('editor1')
-            //bootstrap WYSIHTML5 - text editor
-            $('.textarea').wysihtml5()
+            $('#confirmadd').click(function(){
+                  
+                  var typeid=$('#select').val();
+                  var title=$('#title').val();
+                  var con=UE.getEditor('container').getContent();
+                  if(title==""){
+                     alert('请填写标题');
+                  }
+                  else if (!UE.getEditor('container').hasContents()){
+                     alert('请填写内容!');
+                  }else{
+
+                     $.post("/index/information/addnews",{
+
+                         id:typeid,
+                         name:title,
+                         content:con
+
+                     },function(data){
+                     
+                        if(data.status==1){
+
+                           alert(data.msg);
+                           window.location.href="/index/information/informationlist";
+                        }else{
+                           alert(data.msg);
+
+                        }
+
+
+                     });
+                   
+                  }
+
+
+            });
         })
     </script>
 </body>

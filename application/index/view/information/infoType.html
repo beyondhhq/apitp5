@@ -72,114 +72,26 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>一级分类</th>
-                                            <th>二级分类</th>
-                                            <th>三级分类</th>
+                                            <th>序列</th>
+                                            <th>类型id</th>
+                                            <th>类型名称</th>
                                             <th>添加时间</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                       <?php foreach($list as $k=>$v){?>
                                         <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
+                                            <td><?php echo $k+1;?></td>
+                                            <td><?php echo $v['id'];?></td>
+                                            <td><?php echo $v['names'];?></td>
+                                            <td><?php echo $v['instime'];?></td>
                                             <td>
                                                 <button>删除</button>
                                                 <button>修改</button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>学生指导</td>
-                                            <td>教师角色</td>
-                                            <td>班主任</td>
-                                            <td>2017-11-20</td>
-                                            <td>
-                                                <button>删除</button>
-                                                <button>修改</button>
-                                            </td>
-                                        </tr>
+                                        <?php }?>
                                     </tbody>
                                     <!-- <tfoot>
                                         <tr>
@@ -217,29 +129,31 @@
                         <form>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">一级分类：</label>
-                                <select class="form-control" id="recipient-name">
-                                    <option value=""></option>
-                                    <option value=""></option>
-                                    <option value=""></option>
+                                <select class="form-control" id="select1">
+                                    <option value="0">同级分类</option>
+                                    <?php if(empty($first)){
+
+                                    }else{
+                                       foreach($first as $k=>$v){ ?>                                       
+                                        <option value="<?php echo $v['id']?>"><?php echo $v['names']?></option>                                      
+                                    <?php }}?>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">二级分类：</label>
-                                <select class="form-control" id="recipient-name">
-                                    <option value=""></option>
-                                    <option value=""></option>
-                                    <option value=""></option>
+                                <select class="form-control" id="select2">
+                                    <option value="0">同级分类</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">名称：</label>
-                                <input class="form-control" id="message-text">
+                                <input class="form-control" id="names">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-primary" id="add">添加</button>
                     </div>
                 </div>
             </div>
@@ -294,6 +208,37 @@
                 modal.find('.modal-title').text('添加分类')
                 modal.find('.modal-body input').val(recipient)
             })
+            $("#add").on('click',function(){
+                var select1=$('#select1').val();
+                var select2=$('#select2').val();
+                var names=$('#names').val();
+                
+                $.post("/index/information/addtype",{
+                    select1:select1,
+                    select2:select2,
+                    names:names
+
+                },function(data){
+
+                   
+                       alert(data.msg);
+
+                       window.location.href("/index/information/infotype");
+
+                })
+            
+            })
+            $("#select1").change(function() {
+               var select1 = $("#select1").val();
+               $.post("/index/information/getsecond",
+                 {
+                     id:select1
+          
+                 },
+                 function(data){
+                  $("#select2").html(data);
+                });
+            });
         })
     </script>
 </body>
