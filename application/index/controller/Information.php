@@ -5,20 +5,43 @@ class Information extends Domain
 {
     public function informationlist()
     {       
-    	   
-			return view('informationlist');
+    	    $where['isdel']=0;
+            $res=$this->D('news')->alias('n')->where($where)->field('n.*,nt.names as typename')->join('news_type nt','n.typeid=nt.id')->select();
+            if($res){
+               foreach($res as $k=>$v){
+                  $res[$k]['instime']=date('Y-m-d:H-i-s',$v['instime']);
+               }
+            }
+            $this->assign('list',$res);
+            return $this->fetch('informationlist');
     }
     public function addinformation()
     {       
-    	      $resall=$this->D('news_type')->select();
+    	    $resall=$this->D('news_type')->select();
             $result=$this->GetTree($resall,0,0);          
             $this->assign('list',$result);
 
-			 return $this->fetch('addinformation');
+			return $this->fetch('addinformation');
     }
     public function infoDetail()
     {       
-    	    
+    	    $request=request();
+            $id=$request->get('id');
+            $where['id']=$id;
+            $res=$this->D('news')->where($where)->find();
+            if($res){
+               $res['instime']=date('Y-m-d:H-i-s',$res['instime']);
+            }
+       
+            $this->assign('detail',$res);
+            $this->assign('newsid',$id);
+
+            $resall=$this->D('news_type')->select();
+            $result=$this->GetTree($resall,0,0);          
+            $this->assign('list',$result);
+
+            
+
 			return view('infoDetail');
     }
     public function infoType()
@@ -156,6 +179,51 @@ class Information extends Domain
         }
         return $dat;
         
+    }
+    public function gainews(){
+        $request=request();
+        $id=$request->post('id');
+        $newsid=$request->post('newsid');
+        $name=$request->post('name');
+        $content=$request->post('content');
+        $newcon=strip_tags($content);
+        $intro=substr($newcon,0,60);
+        $data['typeid']=$id;
+        $data['titles']=$name;
+        $data['conts']=$content;
+        $data['intro']=$intro;
+        $data['clicks']=0;
+        $data['instime']=time();
+        $data['isdel']=0;
+        $where['id']=$newsid;
+        $res=$this->D('news')->where($where)->update($data);
+        if($res){
+           $dat['status']=1;
+           $dat['msg']="修改资讯成功";
+        }else{
+           $dat['status']=0;
+           $dat['msg']="修改资讯失败";
+        }
+        return $dat;
+        
+    }
+    public function delnews(){
+           
+           $request=request();
+           $id=$request->post('id');
+           $dat['isdel']=1;
+           $where['id']=$id;
+           $res=$this->D('news')->where($where)->update($dat);
+           if($res){
+              $data['status']=1;
+              $data['msg']="删除成功！";
+           }else{
+              $data['status']=0;
+              $data['msg']="删除失败！";
+           }
+
+           return $data;
+
     }
     
 }

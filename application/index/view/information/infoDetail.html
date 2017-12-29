@@ -71,30 +71,44 @@
                             <!-- /.box-header -->
                             <!-- form start -->
                             <form role="form">
+                              <div class="box-body">
                                 <div class="box-body">
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleType">类型：</label>学业生涯规划
+                                    <div class="form-group" >
+                                       <label style="display: inline-block;">类型</label>
+                                       <select class="form-control select2" style="display: inline-block;width:100%;" id="select">
+                                           <?php foreach($list as $k=>$v){?>
+                                             <option value="<?php echo $v['id']?>" <?php if($v['id']==$detail['typeid']){echo "selected";}?>><?php echo $v['names']?></option>
+                                           <?php }?>
+                                       </select>
                                     </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleTitle">题目：</label>XXXXXX
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleContent">内容：</label>讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发
-                                    </div>
+                                    <div class="form-group" >
+                                       <label style="display: inline-block;">题目</label><br>
 
+                                       <input type="text" class="form-control" id="title" value="{$detail.titles}" style="display: inline-block;" class="col-xs-2"></input>
+                                    </div>
                                     <div class="form-group">
                                         <label>
                                             <span>添加时间：</span>
-                                            <span style="font-weight:normal;">2017-11-20 10:20</span>
+                                            <span style="font-weight:normal;">{$detail.instime}</span>
                                         </label>
-
                                     </div>
+                                    <input type="hidden" value="<?php echo $newsid?>" id="hid">
+                           
+                                    <textarea name='' id='container' style="height:430px;width:100%;">{$detail.conts}</textarea>
+                                    
+                                    <!-- 配置文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
+                                    <!-- 编辑器源码文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.all.js"></script>
+                                      <!-- 实例化编辑器 -->
+                                    <script type="text/javascript">
+                                      var ue = UE.getEditor('container');
+                                    </script>
+                                    
+                                      <label for="exampleProvince"></label>
+                                      <button class="btn btn-primary btn-block btn-flat" id="confirmadd">修改</button>                             
                                 </div>
+                              </div>
                             </form>
                         </div>
                         <!-- /.box -->
@@ -143,6 +157,46 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             })
+
+
+            $('#confirmadd').click(function(){
+                  
+                  var typeid=$('#select').val();
+                  var title=$('#title').val();
+                  var newsid=$('#hid').val();
+                  var con=UE.getEditor('container').getContent();
+                  if(title==""){
+                     alert('请填写标题');
+                  }
+                  else if (!UE.getEditor('container').hasContents()){
+                     alert('请填写内容!');
+                  }else{
+
+                     $.post("/index/information/gainews",{
+
+                         id:typeid,
+                         name:title,
+                         content:con,
+                         newsid:newsid
+                     },function(data){
+                     
+                        if(data.status==1){
+
+                           alert(data.msg);
+                           window.location.href="/index/information/informationlist";
+                           
+                        }else{
+                           alert(data.msg);
+
+                        }
+
+
+                     });
+                   
+                  }
+
+
+            });
         })
     </script>
 </body>

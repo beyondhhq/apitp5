@@ -74,24 +74,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                   <th>1</th>
-                   <th>作文</th>
-                   <th>语言运用之语病专题复习</th>
-                   <th>连续若干年高考有几个题型是课标卷的必考内容，语病考查就是其中之一。</th>
-                   <th>0</th>
-                   <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |   <a href="#">删除</a></th>
-                  </tr>
-                  <tr>
-                   <th>2</th>
-                   <th>数学</th>
-                   <th>数学新课标高考考纲解读之一：高考数学考什么？</th>
-                   <th>“工欲善其事必先利其器”，知己知彼方能百战百胜。要想“善”高考“其事”，更要先“利其器”。</th>
-                   <th>0</th>
-                   <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |    <a href="#">删除</a></th>
-                  </tr>
+                 <?php if(!empty($list)){
+                     foreach($list as $k=>$v){?>
+                         <tr>
+                           <th><?php echo $k+1;?></th>
+                           <th><?php echo $v['typename'];?></th>
+                           <th><?php echo $v['titles'];?></th>
+                           <th><?php echo $v['intro'];?></th>
+                           <th><?php echo $v['clicks'];?></th>
+                           <th><?php echo $v['instime'];?></th>
+                           <th><a href="/index/information/infodetail?id=<?php echo $v['id']?>">详情</a>   |   <a href="#" class="remove" value="<?php echo $v['id'];?>">删除</a></th>
+                         </tr>                  
+                 <?php }}?>
+                  
+               
                           
                 </tbody>
               </table>
@@ -212,6 +208,22 @@
                     'infoEmpty': '没有数据',
                     'infoFiltered': '(过滤总件数 _MAX_ 条)'
                 }
+            })
+            $(".remove").click(function(){
+        
+             if(confirm("确定要删除吗？"))
+                {
+                  var id= $(this).attr('value');
+                   $.post("/index/information/delnews",{id:id},function(data){
+                      if(data.status==1){
+                        alert(data.msg);
+                        window.location.href = "/index/information/informationlist";
+                      }else{
+                        alert(data.msg);
+                      }
+                  })
+                }
+               
             })
             
         })
