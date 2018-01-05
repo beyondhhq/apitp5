@@ -16,15 +16,9 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
-        @media (min-width: 992px) {
-            .col-md-6 {
-                width: 100%;
-            }
-        }
-
-        .form-control {
-            display: inline-block;
-            width: 80%;
+        .box-header>.box-tools [data-toggle="tooltip"] {
+            position: relative;
+            display: none;
         }
     </style>
 </head>
@@ -44,7 +38,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    资讯详情
+                    添加视频
                     <!-- <small>Preview</small> -->
                 </h1>
                 <ol class="breadcrumb">
@@ -52,43 +46,67 @@
                         <a href="#">
                             <i class="fa fa-dashboard"></i> 首页</a>
                     </li>
-                    <li>
-                        <a href="informationList.html"> 资讯管理</a>
-                    </li>
-                    <li class="active">资讯详情</li>
+                    <li class="active">添加视频</li>
                 </ol>
             </section>
             <!-- Main content -->
             <section class="content">
                 <div class="row">
                     <!-- left column -->
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="width:100%;">
                         <!-- general form elements -->
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">详情</h3>
+                                <h3 class="box-title">选择填写</h3>
                             </div>
                             <!-- /.box-header -->
                             <!-- form start -->
-                            <form role="form">
-                              <div class="box-body">
-                                <div class="box-body">
-                                    
-                                    
-                                    
-                                                                
+                          <div class="box-body">
+                            <div class="box-body">
+                                <div class="form-group" >
+                                    <label style="display: inline-block;">类型</label>
+
+                                    <select class="form-control select2" style="display: inline-block;width:100%;" id="select">
+                                        <?php foreach($list as $k=>$v){?>
+                                          <option value="<?php echo $v['id']?>"><?php echo $v['name']?></option>
+                                        <?php }?>
+                                    </select>
                                 </div>
-                              </div>
-                            </form>
+                                <div class="form-group" >
+                                    <label style="display: inline-block;">题目</label>
+
+                                    <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                </div>
+                            </div>
+                            
+                            <!-- /.box-header -->
+                            <div class="box-body pad">
+                          
+                                    <div id="container" name="content" type="text/plain" style="height:420px;width:100%;">
+                                        
+                                    </div>
+                                    <!-- 配置文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
+                                    <!-- 编辑器源码文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.all.js"></script>
+                                      <!-- 实例化编辑器 -->
+                                    <script type="text/javascript">
+                                      var ue = UE.getEditor('container');
+                                    </script>
+                                    
+                                      <label for="exampleProvince"></label>
+                                      <button class="btn btn-primary btn-block btn-flat" id="confirmadd">确认添加</button>
+
+                            </div>
+                          </div>
                         </div>
-                        <!-- /.box -->
-                        <!-- Input addon -->
+
+                       
                         
-                        <!-- /.box -->
                     </div>
                     <!--/.col (left) -->
                     <!-- right column -->
-                   
+                    
                     <!--/.col (right) -->
                 </div>
                 <!-- /.row -->
@@ -98,9 +116,6 @@
         <!-- /.content-wrapper -->
         {include file="footer" /}
         <!-- Control Sidebar -->
-        <!-- /.control-sidebar -->
-        <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
@@ -111,8 +126,9 @@
         $(function () {
             // 当前下拉效果
             $(".treeview").eq(3).addClass('active').siblings().removeClass('active');
+            $(".treeview").eq(3).addClass('active').siblings().removeClass('active');
             $(".treeview").eq(3).addClass('menu-open').siblings().removeClass('menu-open');
-            $(".treeview").eq(3).children('.treeview-menu').children('li').eq(0).addClass('active').siblings().removeClass(
+            $(".treeview").eq(3).children('.treeview-menu').children('li').eq(2).addClass('active').siblings().removeClass(
                 'active');
             //Initialize Select2 Elements
             $('.select2').select2();
@@ -126,14 +142,12 @@
             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
-            })
-
+            });
 
             $('#confirmadd').click(function(){
                   
                   var typeid=$('#select').val();
                   var title=$('#title').val();
-                  var newsid=$('#hid').val();
                   var con=UE.getEditor('container').getContent();
                   if(title==""){
                      alert('请填写标题');
@@ -142,19 +156,18 @@
                      alert('请填写内容!');
                   }else{
 
-                     $.post("/index/information/gainews",{
+                     $.post("/index/information/addvedioinfo",{
 
                          id:typeid,
                          name:title,
-                         content:con,
-                         newsid:newsid
+                         content:con
+
                      },function(data){
                      
                         if(data.status==1){
 
                            alert(data.msg);
                            window.location.href="/index/information/informationlist";
-                           
                         }else{
                            alert(data.msg);
 

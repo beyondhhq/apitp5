@@ -80,10 +80,10 @@
                            <th><?php echo $k+1;?></th>
                            <th><?php echo $v['typename'];?></th>
                            <th><?php echo $v['titles'];?></th>
-                           <th><?php echo $v['intro'];?></th>
-                           <th><?php echo $v['clicks'];?></th>
+                           <th width="55%"><?php echo $v['intro'];?></th>
+                           <th width="5%"><?php echo $v['clicks'];?></th>
                            <th><?php echo $v['instime'];?></th>
-                           <th><a href="/index/information/infodetail?id=<?php echo $v['id']?>">详情</a>   |   <a href="#" class="remove" value="<?php echo $v['id'];?>">删除</a></th>
+                           <th><a href="/index/information/infodetail?id=<?php echo $v['id']?>">详情</a>   |   <a href="/index/information/infomodify?id=<?php echo $v['id']?>">修改</a>   |   <a href="#" class="remove" value="<?php echo $v['id'];?>">删除</a></th>
                          </tr>                  
                  <?php }}?>
                   
@@ -124,15 +124,9 @@
                    <th>传统文化讲座</th>
                    <th>仁民爱物</th>
                    <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |   <a href="#">删除</a></th>
+                   <th><a href="#">详情</a>   |   <a href="#">修改</a>   |   <a href="#">删除</a></th>
                   </tr>
-                  <tr>
-                   <th>2</th>
-                   <th>传统文化讲座</th>
-                   <th>孝亲爱国</th>
-                   <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |   <a href="#">删除</a></th>
-                  </tr>
+                  
                           
                 </tbody>
               </table>

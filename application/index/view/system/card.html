@@ -84,128 +84,41 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                <a href="addCard.html" class="addType" style="display:inline-block; position: absolute;">生成</a>
+                <!--<a href="addCard.html" class="addType" style="display:inline-block; position: absolute;">生成</a>-->
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
+                      <th>序列</th>
                       <th>卡号</th>
                       <th>密码</th>
+                      <th>绑定用户姓名</th>
+                      <th>绑定用户类型</th>
                       <th>生成时间</th>
+                      <th>是否激活</th>
                       <th>激活时间</th>
-                      <th>类型</th>
+                      <th>激活截止</th>
+                      <th>卡状态</th>
                       <th>操作</th>
                     </tr>
                   </thead>
                   <tbody>
+                  <?php foreach($data as $k=>$v){?>
                     <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
+                      <td><?php echo $k+1;?></td>
+                      <td><?php echo $v['cardnum'];?></td>
+                      <td><?php echo $v['cardpass'];?></td>
+                      <td><?php echo $v['names'];?></td>
+                      <td><?php echo $v['usertype'];?></td>
+                      <td><?php echo $v['instime'];?></td>
+                      <td><?php echo $v['status'];?></td>
+                      <td><?php echo $v['acttime'];?></td>
+                      <td><?php echo $v['actendtime'];?></td>
+                      <td><?php echo $v['cstatus'];?></td>
                       <td>
-                        <a href="cardDetail.html">详情</a>
+                        <a href="#" value="<?php echo $v['id'];?>">作废</a>
                       </td>
                     </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>s176554625</td>
-                      <td>123456</td>
-                      <td>2017-01-02</td>
-                      <td>2017-01-03</td>
-                      <td>学生</td>
-                      <td>
-                        <a href="cardDetail.html">详情</a>
-                      </td>
+                  <?php }?>
                     </tr>
                   </tbody>
                   <!-- <tfoot>

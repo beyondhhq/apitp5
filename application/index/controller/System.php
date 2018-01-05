@@ -3,9 +3,48 @@ namespace app\index\controller;
 class System extends Domain
 {
     public function card()
-    {       
-    	    
-			return view('card');
+    {        
+      $res=$this->D('users_card')->alias('uc')->join('users u','uc.uid=u.id')->field('uc.*,u.usertype,u.names')->select();
+
+      if($res){
+         foreach($res as $k=>$v){
+            if($v['status']==0){
+               $res[$k]['status']="未激活";
+            }else{
+
+              $res[$k]['status']="已激活";
+            }
+
+            if($v['cstatus']==1){
+               $res[$k]['cstatus']="正常";
+            }else{
+
+              $res[$k]['cstatus']="已作废";
+            }
+            if($v['usertype']==1){
+               $res[$k]['usertype']="学生";
+            }elseif($v['usertype']==2){
+               $res[$k]['usertype']="家长";
+
+
+            }elseif($v['usertype']==3){
+               $res[$k]['usertype']="教师";
+
+
+            }else{
+
+              $res[$k]['usertype']="其它";
+            }
+            $res[$k]['instime']=date('Y-m-d:H-i-s',$v['instime']);
+            $res[$k]['acttime']=date('Y-m-d:H-i-s',$v['acttime']);
+            $res[$k]['actendtime']=date('Y-m-d:H-i-s',$v['actendtime']);
+         }
+
+      }else{
+         $res=array();
+      }
+      $this->assign('data',$res);
+			return $this->fetch('card');
     }
     public function addcard()
     {       
