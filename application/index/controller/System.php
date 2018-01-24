@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+use think\Db;
 class System extends Domain
 {
     public function card()
@@ -52,12 +53,13 @@ class System extends Domain
 			return view('addcard');
     }
     public function redenvelopelist(){
-
-            $res=$this->D('redpacket')->where(1)->select();
+            $db2=Db::connect('db2');
+            $res=$db2->name('redpacket')->where(1)->order('submit_time desc')->paginate(10)->each(function($item, $key){
+                     $item['money'] = $item['money']/100;
+                     return $item;
+                     });;
             if($res){
-              foreach($res as $k=>$v){
-                  $res[$k]['money']=$v['money']/100;
-              }
+              
               $this->assign('list',$res); 
               
             }else{
@@ -71,19 +73,19 @@ class System extends Domain
     
     public function cardDetail(){
         
-            return view('cardDetail');
+            return view('carddetail');
               
     }
     //管理员列表
     public function index(){
         
-         $where['isdel']=0;
+  
          $uid=session('uid');
          if($uid==1){
-           $res=$this->D('admins')->field('id,username,names,instime')->where($where)->select();
+           $res=$this->D('admins')->field('id,username,names,instime')->select();
          }else{
            $where['id']=array();
-           $res=$this->D('admins')->field('id,username,names,instime')->where("isdel",0)->where('id','neq',1)->select();
+           $res=$this->D('admins')->field('id,username,names,instime')->where('id','neq',1)->select();
          }
          
          if($res){   
@@ -112,7 +114,7 @@ class System extends Domain
           $this->assign('auth',$newarr);
 
 
-          return $this->fetch('addAdmin');
+          return $this->fetch('addadmin');
               
     }
     public function adminruku(){
@@ -180,17 +182,20 @@ class System extends Domain
             }
       
             $uid=session('uid');
+            print_R($res);
             $this->assign('sessionid',$uid);
             $this->assign('data',$res);
-            return $this->fetch('adminDetail');
+            return $this->fetch('admindetail');
               
     }
     public function redsend(){
+           $db2=Db::connect('db2');
            $request=request();
            $id=$request->post('id');
            $dat['is_send']=1;
            $where['id']=$id;
-           $res=$this->D('redpacket')->where($where)->update($dat);
+
+           $res=$db2->name('redpacket')->where($where)->update($dat);
            if($res){
               $data['status']=1;
               $data['msg']="发送成功！";
@@ -208,9 +213,9 @@ class System extends Domain
            
            $request=request();
            $id=$request->post('id');
-           $dat['isdel']=1;
+           
            $where['id']=$id;
-           $res=$this->D('admins')->where($where)->update($dat);
+           $res=$this->D('admins')->where($where)->delete();
            if($res){
               $data['status']=1;
               $data['msg']="删除成功！";
@@ -222,5 +227,26 @@ class System extends Domain
            return $data;
 
     }
+    public function adminmodify(){
+           $request=request();
+           $id=$request->post('id');
+           $auth=$request->post('auth');
+           $dat['powers']=$auth;
+           $where['id']=$id;
+           $res=$this->D('admins')->where($where)->update($dat);
+           if($res){
+              $data['status']=1;
+              $data['msg']="修改成功！";
+           }else{
+              $data['status']=0;
+              $data['msg']="修改失败！";
+           }
+
+           return $data;
+
+
+
+    }
+
     
 }

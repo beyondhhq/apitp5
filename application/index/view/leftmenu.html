@@ -23,7 +23,7 @@ if($res['powers']=='super'){
   $resauth=Db::query($sql);
           foreach($resauth as $k=>$v){
              $wher['pid']=$v['id'];
-             $sonres=Db::table('admin_auth')->field('id,authname,pid,path,icon')->where($wher)->select();
+             $sonres=Db::table('admin_auth')->field('id,authname,pid,path,icon')->where($wher)->where('id','in',$power)->select();
              $newarr[$k]['id']=$v['id'];
              $newarr[$k]['authname']=$v['authname'];
              $newarr[$k]['path']=$v['path'];

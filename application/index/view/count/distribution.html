@@ -16,7 +16,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-
+<?php $data=array();?>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
@@ -32,7 +32,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    分销统计
+                    分销用户
                     <small></small>
                 </h1>
                 <ol class="breadcrumb">
@@ -40,16 +40,70 @@
                         <a href="#">
                             <i class="fa fa-dashboard"></i> 首页</a>
                     </li>
-                    <li class="active">分销统计</li>
+                    <li class="active">分销用户</li>
                 </ol>
             </section>
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                  <div class="col-md-12">
-                         
-                  </div> 
-                </div>               
+                    <div class="col-xs-12">
+                        <div class="box">
+                            
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>用户姓名</th>
+                                            <th>用户电话</th>
+                                            <th>用户类型</th>
+                                            <th>微信昵称</th>
+                                            <th>推荐人姓名</th>
+                                            <th>用户状态</th>
+                                            <th>用户生成时间</th>
+                                            <th>发放佣金</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        <?php foreach($lists as $k=>$v){?>
+                                           <tr>
+                                            <td><?php echo $k+1?></td>
+                                            <td><?php echo $v['names']?></td>
+                                            <td><?php echo $v['tel']?></td>
+                                            <td><?php if($v['usertype']==1){ echo "学生";}elseif($v['usertype']==2){echo "家长";}elseif($v['usertype']==3){echo "教师";}else{echo "其它";}?></td>
+                                            <td><?php echo $v['nickname']?></td>
+                                            <td><?php if($v['fname']==""){echo "<font color='red'>无推荐人";}else{echo "<font color='blue'>".$v['fname'];} ?></td>
+                                            <td><?php if($v['status']==0){ echo "初始状态";}elseif($v['status']==1){echo "审核中";}elseif($v['status']==2){echo "礼盒已寄送";}elseif($v['status']==3){echo "审核成功";}else{echo "绑卡用户";}?></td>
+                                            <td><?php echo date('Y-m-d:H-i-s',$v['instime'])?></td>
+                                            <td><?php echo $v['issue_bonus']?></td>
+                                            <td><a href="wxuserdetail.html?id=<?php echo $v['id']?>">详情</a></td>
+                                           </tr>
+                                                        
+                                        <?php }?>
+                                        
+                                    </tbody>
+                                    <!-- <tfoot>
+                                        <tr>
+                                            <th>Rendering engine</th>
+                                            <th>Browser</th>
+                                            <th>Platform(s)</th>
+                                            <th>Engine version</th>
+                                            <th>CSS grade</th>
+                                        </tr>
+                                    </tfoot> -->
+                                </table>
+                                <div id="fenye">{$lists->render()}</div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
             </section>
             <!-- /.content -->
         </div>
@@ -65,7 +119,7 @@
             // 当前下拉效果
             $(".treeview").eq(6).addClass('active').siblings().removeClass('active');
             $(".treeview").eq(6).addClass('menu-open').siblings().removeClass('menu-open');
-            $(".treeview").eq(6).children('.treeview-menu').children('li').eq(0).addClass('active').siblings().removeClass(
+            $(".treeview").eq(6).children('.treeview-menu').children('li').eq(1).addClass('active').siblings().removeClass(
                 'active');
             //Initialize Select2 Elements
             $('.select2').select2()

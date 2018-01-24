@@ -5,14 +5,33 @@ class Information extends Domain
 {
     public function informationlist()
     {       
-    	    $where['n.isdel']=0;
-            $res=$this->D('news')->alias('n')->where($where)->field('n.*,nt.names as typename')->join('news_type nt','n.typeid=nt.id')->order('n.instime desc')->select();
-            if($res){
-               foreach($res as $k=>$v){
-                  $res[$k]['instime']=date('Y-m-d',$v['instime']);
-               }
+            $request=request();
+            $select=$request->get('select');   
+            $biaoti=$request->get('biaoti');
+            $pageParam=array();
+            if($select){
+              $this->assign('select',$select);
+              $sonres=$this->getAllIds($select);        
+              $where['n.typeid']=array("in",$sonres);
+              $pageParam['query']['select'] = $select;
             }
-            $this->assign('list',$res);
+            if($biaoti){
+              $this->assign('biaoti',$biaoti);
+              $where['n.titles']=array("LIKE", '%' . $biaoti . '%');
+              $pageParam['query']['biaoti'] = $biaoti;
+            }
+            $whe['isdel']=0;
+            $resall=$this->D('news_type')->where($whe)->select();
+            $result=$this->GetTree($resall,0,0);          
+            $this->assign('list',$result);
+            
+    	      $where['n.isdel']=0;
+            $res=$this->D('news')->alias('n')->where($where)->field('n.*,nt.names as typename')->join('news_type nt','n.typeid=nt.id')->order('n.instime desc')->paginate(10,false,$pageParam)->each(function($item, $key){
+                     $item['instime'] = date('Y-m-d',$item['instime']);
+                     return $item;
+                     });
+           
+            $this->assign('lists',$res);
             return $this->fetch('informationlist');
     }
     public function addinformation()
@@ -26,7 +45,7 @@ class Information extends Domain
     }
     public function addvedio()
     {       
-            $where['isdel']=0;
+            $where['isdel']=0;                                    
             $resall=$this->D('news_type')->where($where)->select();
             $result=$this->GetTree($resall,0,0);          
             $this->assign('list',$result);
@@ -82,7 +101,7 @@ class Information extends Domain
                }
             }
             $this->assign('list',$result);
-            return $this->fetch('infoType');
+            return $this->fetch('infotype');
 
 
 
@@ -251,6 +270,25 @@ class Information extends Domain
       
         return $str;
     }
+    public function pushnews(){
+           $request=request();
+           $id=$request->post('id');
+           $dat['ispush']=1;
+           $where['id']=$id;
+           $res=$this->D('news')->where($where)->update($dat);
+           if($res){
+              $data['status']=1;
+              $data['msg']="发布成功！";
+           }else{
+              $data['status']=0;
+              $data['msg']="发布失败！";
+           }
+
+           return $data;
+
+
+
+    }
     public function addnews(){
         $request=request();
         $id=$request->post('id');
@@ -265,6 +303,7 @@ class Information extends Domain
         $data['clicks']=0;
         $data['instime']=time();
         $data['isdel']=0;
+        $data['ispush']=0;
         $res=$this->D('news')->insert($data);
         if($res){
            $dat['status']=1;
@@ -346,5 +385,35 @@ class Information extends Domain
            return $data;
 
     }
+    public function getAllIds($id)
+   {  
+     global $son;
+     $where['isdel']=0;
+     $where['fid']=$id;
+     $res = $this->D('news_type')->where($where)->select();
+     if($res){
+       foreach($res as $k=>$v){
+           $son[]=$v['id'];
+           $this->getAllIds($v['id']);
+       }
+       $son[]=$id;
+       return $son;
+     }else{
+       return $id;
+
+     }
     
+   }
+   public function test(){
+      echo "<pre>";
+      $res=$this->getAllIds(24);
+      if(is_array($res)){
+         $cid=implode($res,","); 
+      }else{
+        $cid=$res;
+      }
+      
+      echo  $cid;
+   }
+     
 }

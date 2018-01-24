@@ -72,8 +72,9 @@
                             <!-- form start -->
                             <form role="form">
                                 <div class="box-body">
+                                    <input type="hidden" value={$data.id} id="adminid">
                                     <div class="form-group" style="width: 40%;">
-                                        <label for="exampleUserName">姓名：</label>{$data.names}
+                                        <label for="exampleUserName">姓名：</label>{$data.names}{$data.id}
                                         <!-- <input type="name" class="form-control" id="exampleUserName" placeholder="请输入用户名"> -->
                                     </div>
                                     <div class="form-group" style="width: 40%;">
@@ -127,7 +128,7 @@
                                         <?php }?>
                                         
                                     </div> 
-                                    <button class="btn btn-primary" type="button">修改</button>
+                                    <button class="btn btn-primary" type="button" id="modify">修改</button>
                                     <?php }}?>
                                     
                                 </div>
@@ -177,6 +178,130 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             });
+			
+			
+			$('#1').on('ifChecked', function (event) {
+                $('#9').iCheck('check');
+            });
+            $('#9').on('ifChecked', function (event) {
+                $('#1').iCheck('check');
+            });
+            $('#1').on('ifUnchecked', function (event) {
+                $('#9').iCheck('uncheck');
+            });
+            $('#9').on('ifUnchecked', function (event) {
+                $('#1').iCheck('uncheck');
+            });
+
+
+            $('#2').on('ifChecked', function (event) {
+                $('#10').iCheck('check');
+                $('#11').iCheck('check');
+            });
+            $('#2').on('ifUnchecked', function (event) {
+                $('#10').iCheck('uncheck');
+                $('#11').iCheck('uncheck');
+            });
+
+
+            $('#3').on('ifChecked', function (event) {
+                $('#12').iCheck('check');
+                $('#13').iCheck('check');
+                $('#14').iCheck('check');
+            });
+            $('#3').on('ifUnchecked', function (event) {
+                $('#12').iCheck('uncheck');
+                $('#13').iCheck('uncheck');
+                $('#14').iCheck('uncheck');
+            });
+
+
+            $('#4').on('ifChecked', function (event) {
+                $('#15').iCheck('check');
+                $('#16').iCheck('check');
+                $('#17').iCheck('check');
+				$('#24').iCheck('check');
+            });
+            $('#4').on('ifUnchecked', function (event) {
+                $('#15').iCheck('uncheck');
+                $('#16').iCheck('uncheck');
+                $('#17').iCheck('uncheck');
+				$('#24').iCheck('uncheck');
+            });
+
+
+            $('#5').on('ifChecked', function (event) {
+                $('#18').iCheck('check');
+                $('#19').iCheck('check');
+            });
+            $('#5').on('ifUnchecked', function (event) {
+                $('#18').iCheck('uncheck');
+                $('#19').iCheck('uncheck');
+            });
+
+
+            $('#6').on('ifChecked', function (event) {
+                $('#7').iCheck('check');
+                $('#8').iCheck('check');
+                $('#20').iCheck('check');
+                $('#21').iCheck('check');
+            });
+            $('#6').on('ifUnchecked', function (event) {
+                $('#7').iCheck('uncheck');
+                $('#8').iCheck('uncheck');
+                $('#20').iCheck('uncheck');
+                $('#21').iCheck('uncheck');
+            });
+			$('#22').on('ifChecked', function (event) {
+                $('#23').iCheck('check');
+                $('#25').iCheck('check');
+                $('#26').iCheck('check');
+      
+            });
+            $('#22').on('ifUnchecked', function (event) {
+                $('#23').iCheck('uncheck');
+                $('#25').iCheck('uncheck');
+                $('#26').iCheck('uncheck');
+            });
+			
+			var str = "",
+                arr = [];
+			var adminid=$("#adminid").val();
+			
+			$('#modify').click(function () {
+			  if(confirm('确定要修改吗？')){
+                $('.icheckbox_minimal-blue.checked').each(function () {
+                    arr.push($(this).children('input[type="checkbox"]').attr("id"));
+                });
+                for (var i in arr) { //获取
+                    arr[i];
+                }
+                str = arr.join(","); //转成数组
+										
+                    if(1){
+			
+					    
+						$.post("/index/system/adminmodify",{
+							 id:adminid,
+							 auth:str						
+							},function(data){
+							   if(data.status==1){
+								    alert(data.msg);
+									window.location.href = "/index/system/admindetail?id="+id;
+								   }else{
+									   alert(data.msg);
+									   }
+							
+							});
+					
+					}
+					
+					
+					
+                    
+
+			  }
+            })
             
         })
     </script>

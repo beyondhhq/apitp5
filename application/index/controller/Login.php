@@ -13,7 +13,6 @@ class Login extends Controller
 			$username=$request->post('username');
 			$password=$request->post('password');
 			$where['username']=$username;
-      $where['isdel']=0;
 			$res=Db::table('admins')->where($where)->field("id,password")->find();
 			if($res){
                if($res['password']==md5($password)){

@@ -95,6 +95,6 @@ class School extends Domain
             //返回学校的配置信息
             $pres=$this->D('schools_conf')->where($wher)->select();
             $this->assign('peizhi',$pres);
-            return $this->fetch('schoolDetail');
+            return $this->fetch('schooldetail');
     }
 }

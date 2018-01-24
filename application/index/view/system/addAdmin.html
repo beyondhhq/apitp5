@@ -199,11 +199,13 @@
                 $('#15').iCheck('check');
                 $('#16').iCheck('check');
                 $('#17').iCheck('check');
+				$('#24').iCheck('check');
             });
             $('#4').on('ifUnchecked', function (event) {
                 $('#15').iCheck('uncheck');
                 $('#16').iCheck('uncheck');
                 $('#17').iCheck('uncheck');
+				$('#24').iCheck('uncheck');
             });
 
 
@@ -229,6 +231,17 @@
                 $('#20').iCheck('uncheck');
                 $('#21').iCheck('uncheck');
             });
+			$('#22').on('ifChecked', function (event) {
+                $('#23').iCheck('check');
+                $('#25').iCheck('check');
+                $('#26').iCheck('check');
+      
+            });
+            $('#22').on('ifUnchecked', function (event) {
+                $('#23').iCheck('uncheck');
+                $('#25').iCheck('uncheck');
+                $('#26').iCheck('uncheck');
+            });
 
             //    密码验证
             $("input[type='text']").focus(function () {
@@ -253,6 +266,7 @@
                     arr[i];
                 }
                 str = arr.join(","); //转成数组
+				
                 console.log(str);
 				    name = $('#exampleUserName').val();
                     // 账号
@@ -283,7 +297,7 @@
                         $('.help-block4').html("两次输入的密码不一致！");
                         $('.btn').attr("type", "button");
                     }else{
-						
+			
 					    
 						$.post("/index/system/adminruku",{
 							 names:name,
