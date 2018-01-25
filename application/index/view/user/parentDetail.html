@@ -65,42 +65,85 @@
                     <div class="col-md-6">
                         <!-- general form elements -->
                         <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">详情</h3>
+                            <div style="margin:15px">
+                             <h3 class="box-title">详情</h3>
+                           </div>
+                           <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                                    
+                                    <tbody>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th><font color="blue">{$detail.names}</font></th>
+                                            <th>孩子姓名</th>
+                                            <th><font color="blue">{$detail.child}</font></th>
+                                        </tr>
+                                        <tr>
+                                            <th>账号是否有效</th>
+                                            <th><font color="blue"><?php if($detail['valid']==1){echo "有效";}else{echo "无效";}?></th>
+                                            <th>用户名</th>
+                                            <th><font color="blue">{$detail.loginname}</font></th>
+                                                                                   
+                                        </tr>
+                                        <tr>
+                                            <th>家庭住址</th>
+                                            <th><font color="blue">{$detail.address}</th>
+                                            
+                                            <th>电话</th>
+                                            <th><font color="blue">{$detail.tel}</font></th>                                       
+                                        </tr>
+                                      
+                                        <tr>
+                                            <th>所在地区</th>
+                                            <th ><font color="blue">{$detail.xian}</th>
+                                            <th>性别</th>
+                                            <th ><font color="blue">{$detail.sex}</th>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>使用截止日期</th>
+                                            <th ><font color="blue"><?php if($detail['deaddate']==0){echo "无";}else{echo $detail['deaddate'];}?></th>
+                                            <th>是否支付</th>
+                                            <th ><font color="blue">否</th>
+                                        </tr>
+                                        <tr>
+                                            <th>支付日期</th>
+                                            <th ><font color="blue">未支付</th>
+                                            <th>支付金额</th>
+                                            <th ><font color="blue">未支付</th>
+                                        </tr> 
+                                        <tr>
+                                            <th>用户状态</th>
+                                            <th colspan="2">
+                                               <div style="margin:6px auto;"> 
+                               
+
+                                                 <span style="margin:0px 30px 0px 10px;"><input type="radio" value="1" name="r1" class="minimal" <?php if($detail['types']==1){echo "checked";}?>>&nbsp;&nbsp;测试用户</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="2" name="r1" class="minimal" <?php if($detail['types']==2){echo "checked";}?>>&nbsp;&nbsp;体验用户</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="3" name="r1" class="minimal" <?php if($detail['types']==3){echo "checked";}?>>&nbsp;&nbsp;vip用户</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="4" name="r1" class="minimal" <?php if($detail['types']==4){echo "checked";}?>>&nbsp;&nbsp;其他</span>
+                                                 
+
+                                               </div>
+                                            </th>
+                                            
+                                            <th ><button type="button" id="modify" class="btn bg-maroon">修改</button></th>
+                                        </tr>                                                                                    
+                                        <input type="hidden" id="uid" value="{$detail.id}"></input>                        
+                                    </tbody>
+                                    <!-- <tfoot>
+                                        <tr>
+                                            <th>Rendering engine</th>
+                                            <th>Browser</th>
+                                            <th>Platform(s)</th>
+                                            <th>Engine version</th>
+                                            <th>CSS grade</th>
+                                        </tr>
+                                    </tfoot> -->
+                                </table>
+                                <label for="exampleProvince"></label>
+                                <button class="btn btn-primary btn-block btn-flat" id="confirmadd">初始化数据</button>
                             </div>
-                            <!-- /.box-header -->
-                            <!-- form start -->
-                            <form role="form">
-                                <div class="box-body">
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleUserName">家长姓名：</label>{$data.names}
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleUserName">孩子姓名：</label>{$data.child}
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleNumber">账号：</label>{$data.username}
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleNumber">电话：</label>{$data.mobile}
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleNumber">卡号：</label>{$data.cardnum}
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleSchool">性别：</label>：<?php if($data['sex']==1){echo "男";}else{
-                                        echo "女";}?>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            <span>注册时间：</span>
-                                            <span style="font-weight:normal;">{$data.instime}</span>
-                                        </label>
-
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                         <!-- /.box -->
                         

@@ -82,29 +82,33 @@ class User extends Domain
     public function teacherDetail()
     {       
     	    $id=$_GET['id'];
-    	    $where['u.id']=$id;
-    	    $res=$this->D('users')->alias('u')->where($where)->field("u.*,s.names as schname")->join("schools s","u.schid=s.id")->find();
+    	    $where['u.TeacherID']=$id;
+    	    $res=Db::connect('db2')->name('teacher')->alias('u')->field('u.TeacherID as id,u.TeacherName as names,u.Username as loginname,u.Sex as sex,u.types,u.xian,u.phone as tel,u.deaddate,s.SchoolName as school')->where($where)->join("school s","u.SchoolID=s.SchoolID")->find();
 
-            $this->assign("data",$res);
+            $this->assign("detail",$res);
 			return view('teacherdetail');
     }
     public function parentDetail()
     {       
     	    $id=$_GET['id'];
-    	    $where['id']=$id;
-    	    $res=$this->D('users')->where($where)->find();
-    	    $pcard=$res['cardnum'];
-    	    $scard=str_replace("F","S",$pcard);
-    	    $wherestu['cardnum']=$scard;
-    	    $stuinfo=$this->D('users')->where($wherestu)->field('cardnum,names')->find();
-    	    if($stuinfo){
-    	       $res['child']=$stuinfo['names'];
-    	       $res['instime']=date("Y-m-d",$res['instime']);
+    	    $where['parentid']=$id;
+    	    $res=Db::connect('db2')->name('parent')->where($where)->field('parentid as id,valid,parentcard,studentcard,loginuser as loginname,parentname as names,phone as tel,sex,xian,address,deaddate,types')->find();
+    	    if($res['parentcard']){
+              $pcard=$res['parentcard'];
+    	      $wherestu['parentcard']=$pcard;
+    	      $stuinfo=Db::connect('db2')->name('student')->where($wherestu)->field('cardnum,StudentName as names')->find();
+    	      if($stuinfo){
+    	        $res['child']=$stuinfo['names'];
+    	      }else{
+    	        $res['child']="未关联子女信息";
+    	      }
+
     	    }else{
-    	       $res['child']="";
+    	    	$res['child']="未关联子女信息";
     	    }
+    	    
     	   
-            $this->assign("data",$res);
+            $this->assign("detail",$res);
 			return view('parentdetail');
     }
   

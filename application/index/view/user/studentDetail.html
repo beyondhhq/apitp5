@@ -77,6 +77,8 @@
                                             <th><font color="blue">{$detail.names}</font></th>
                                             <th>用户名</th>
                                             <th><font color="blue">{$detail.loginname}</font></th>
+                                        </tr>
+                                        <tr>
                                             <th>电话</th>
                                             <th><font color="blue">{$detail.tel}</font></th>
                                             <th>学校</th>
@@ -90,6 +92,8 @@
                                             <th ><font color="blue"><?php if($detail['valid']==1){echo "有效";}else{echo "无效";}?></th>
                                             <th>性别</th>
                                             <th ><font color="blue">{$detail.sex}</th>
+                                        </tr>
+                                        <tr>
                                             <th>文理科</th>
                                             <th ><font color="blue">{$detail.type}</th>
                                             <th>所在地区</th>
@@ -100,21 +104,23 @@
                                             <th ><font color="blue"><?php if($detail['deaddate']==0){echo "无";}else{echo $detail['deaddate'];}?></th>
                                             <th>是否支付</th>
                                             <th ><font color="blue">否</th>
+                                        </tr>
+                                        <tr>
                                             <th>支付日期</th>
                                             <th ><font color="blue">未支付</th>
                                             <th>支付金额</th>
                                             <th ><font color="blue">未支付</th>
                                         </tr> 
                                         <tr>
-                                            <th>状态</th>
-                                            <th colspan="6">
+                                            <th>用户状态</th>
+                                            <th colspan="2">
                                                <div style="margin:6px auto;"> 
                                
 
-                                                 <span style="margin:0px 30px 0px 10px;"><input type="radio" value="1" name="r1" class="minimal" <?php if($detail['types']==1){echo "checked";}?>>&nbsp;&nbsp;审核中</span>
-                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="2" name="r1" class="minimal" <?php if($detail['types']==2){echo "checked";}?>>&nbsp;&nbsp;礼盒已寄送</span>
-                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="3" name="r1" class="minimal" <?php if($detail['types']==3){echo "checked";}?>>&nbsp;&nbsp;审核成功</span>
-                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="4" name="r1" class="minimal" <?php if($detail['types']==4){echo "checked";}?>>&nbsp;&nbsp;绑卡用户</span>
+                                                 <span style="margin:0px 30px 0px 10px;"><input type="radio" value="1" name="r1" class="minimal" <?php if($detail['types']==1){echo "checked";}?>>&nbsp;&nbsp;测试用户</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="2" name="r1" class="minimal" <?php if($detail['types']==2){echo "checked";}?>>&nbsp;&nbsp;体验用户</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="3" name="r1" class="minimal" <?php if($detail['types']==3){echo "checked";}?>>&nbsp;&nbsp;vip用户</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="4" name="r1" class="minimal" <?php if($detail['types']==0){echo "checked";}?>>&nbsp;&nbsp;其他</span>
                                                  
 
                                                </div>
@@ -134,7 +140,10 @@
                                         </tr>
                                     </tfoot> -->
                                 </table>
-            </div>
+                                <label for="exampleProvince"></label>
+                                <button class="btn btn-primary btn-block btn-flat" id="confirmadd">初始化数据</button>
+                            </div>
+                            
                         </div>
                         <!-- /.box -->
 
