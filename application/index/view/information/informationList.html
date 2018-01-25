@@ -61,6 +61,36 @@
             
             <!-- /.box-header -->
             <div class="box-body">
+              
+              <div class="row">
+               <form action="/index/information/informationlist" method="get" >   
+		        <div class="col-md-6"  >
+			          <div class="form-group">
+                        <label>按类型搜索</label>
+                        <select class="form-control select2" style="display: inline-block;width:100%;"  tabindex="-1" aria-hidden="true" name="select">
+                         <option selected="selected" value=0>请选择</option>
+                         <?php foreach($list as $k=>$v){?>
+                                          <option value="<?php echo $v['id']?>" <?php if(!empty($select)){if($v['id']==$select){echo 'selected="selected"';}}?>><?php echo $v['name']?></option>
+                                        <?php }?>                    
+                        </select>
+                      </div>
+		        </div>
+
+		        <div class="col-md-5" >
+			          <div class="form-group">
+                        <label>按标题搜索</label>
+                        <input type="text" class="form-control" name="biaoti" placeholder="请输入标题关键字" value="<?php if(!empty($biaoti)){echo $biaoti;}?>">
+                      </div>
+		        </div>
+                <div class="col-md-1" >
+			          <div class="form-group">
+                        <label>搜索</label>
+                        <button type="submit" class="btn btn-block btn-success">搜索</button>
+                      </div>
+		        </div>
+                
+               <form>
+	          </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -70,31 +100,32 @@
                   <th>资讯简介</th>
                   <th>点击量</th>
                   <th>录入时间</th>
+                  <th>是否发布</th>
                   <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                   <th>1</th>
-                   <th>作文</th>
-                   <th>语言运用之语病专题复习</th>
-                   <th>连续若干年高考有几个题型是课标卷的必考内容，语病考查就是其中之一。</th>
-                   <th>0</th>
-                   <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |   <a href="#">删除</a></th>
-                  </tr>
-                  <tr>
-                   <th>2</th>
-                   <th>数学</th>
-                   <th>数学新课标高考考纲解读之一：高考数学考什么？</th>
-                   <th>“工欲善其事必先利其器”，知己知彼方能百战百胜。要想“善”高考“其事”，更要先“利其器”。</th>
-                   <th>0</th>
-                   <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |    <a href="#">删除</a></th>
-                  </tr>
+                 <?php if(!empty($lists)){
+                     foreach($lists as $k=>$v){?>
+                         <tr>
+                           <th><?php echo $k+1;?></th>
+                           <th width="7%"><?php echo $v['typename'];?></th>
+                           <th width="13%"><font color='blue'><?php echo $v['titles'];?></font></th>
+                           <th width="45%"><?php echo $v['intro'];?></th>
+                           <th ><?php echo $v['clicks'];?></th>
+                           <th><?php echo $v['instime'];?></th>
+                           <th><?php if($v['ispush']==1){ echo "<font color='red'>已发布</font>";}else{echo "<font color='green'>未发布</font>";}?></th>
+                           <th><a href="/index/information/infodetail?id=<?php echo $v['id']?>">预览</a>   |   <a href="/index/information/infomodify?id=<?php echo $v['id']?>">修改</a>   |   <a href="#" class="remove" value="<?php echo $v['id'];?>">删除</a>   |   <a href="#" class="push" value="<?php echo $v['id'];?>">发布</a><input type="hidden" value="<?php echo $v['ispush'];?>"></th>
+                         </tr>                  
+                 <?php }}?>
+                  
+                 
+
                           
                 </tbody>
               </table>
+              <div id="fenye">{$lists->render()}</div>
+              
             </div>
             <!-- /.box-body -->
           </div>
@@ -128,15 +159,9 @@
                    <th>传统文化讲座</th>
                    <th>仁民爱物</th>
                    <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |   <a href="#">删除</a></th>
+                   <th><a href="#">详情</a>   |   <a href="#">修改</a>   |   <a href="#">删除</a></th>
                   </tr>
-                  <tr>
-                   <th>2</th>
-                   <th>传统文化讲座</th>
-                   <th>孝亲爱国</th>
-                   <th>2017-12-22</th>
-                   <th><a href="#">详情</a>   |   <a href="#">删除</a></th>
-                  </tr>
+                  
                           
                 </tbody>
               </table>
@@ -175,46 +200,51 @@
             //Initialize Select2 Elements
             $('.select2').select2()
 
-            $('#example1').DataTable({
-                'language': {
-                    'emptyTable': '没有数据',
-                    'loadingRecords': '加载中...',
-                    'processing': '查询中...',
-                    'search': '搜索:',
-                    'lengthMenu': '每页 _MENU_ 件',
-                    'zeroRecords': '没有数据',
-                    'paginate': {
-                        'first': '第一页',
-                        'last': '最后一页',
-                        'next': '下一页',
-                        'previous': '上一页'
-                    },
-                    'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
-                    'infoEmpty': '没有数据',
-                    'infoFiltered': '(过滤总件数 _MAX_ 条)'
+            
+           
+            $(".remove").click(function(){
+        
+             if(confirm("确定要删除吗？"))
+                {
+                  var id= $(this).attr('value');
+                   $.post("/index/information/delnews",{id:id},function(data){
+                      if(data.status==1){
+                        alert(data.msg);
+                        window.location.href = "/index/information/informationlist";
+                      }else{
+                        alert(data.msg);
+                      }
+                  })
                 }
+               
             })
-            $('#example2').DataTable({
-                'language': {
-                    'emptyTable': '没有数据',
-                    'loadingRecords': '加载中...',
-                    'processing': '查询中...',
-                    'search': '搜索:',
-                    'lengthMenu': '每页 _MENU_ 件',
-                    'zeroRecords': '没有数据',
-                    'paginate': {
-                        'first': '第一页',
-                        'last': '最后一页',
-                        'next': '下一页',
-                        'previous': '上一页'
-                    },
-                    'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
-                    'infoEmpty': '没有数据',
-                    'infoFiltered': '(过滤总件数 _MAX_ 条)'
+			$(".push").click(function(){
+				
+				if(confirm("确定要发布了吗？"))
+                {
+                  var ids= $(this).attr('value');
+				  var status=$(this).next().val();
+                   console.log(ids);
+				   if(status==1){
+					   alert("此资讯已发布！");
+					   }else{
+						   $.post("/index/information/pushnews",{id:ids},function(data){
+                              if(data.status==1){
+						        alert(data.msg);
+						        window.location.href = "/index/information/informationlist";
+					          }else{
+						        alert(data.msg);
+						      }
+                             })
+						   
+						   }
+                   
                 }
+               
             })
             
         })
+		
     </script>
 </body>
 

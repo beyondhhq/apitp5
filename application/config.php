@@ -212,6 +212,43 @@ return [
         'auto_start'     => true,
     ],
 
+    'db2' => [
+       // 数据库类型
+       'type' => 'mysql',
+       // 服务器地址
+       'hostname' => 'rm-2zes3163514jk3a9zo.mysql.rds.aliyuncs.com',
+       // 数据库名
+       'database' => 'zhcdb',
+       // 数据库用户名
+       'username' => 'web247',
+       // 数据库密码
+       'password' => 'kCdcGHhOy9TtDOEt',
+       // 数据库编码默认采用utf8
+       'charset' => 'utf8',
+       // 端口
+       'hostport'        => '3306',
+       // 数据库表前缀
+       'prefix' => 't_',
+     ],
+     'db3' => [
+       // 数据库类型
+       'type' => 'mysql',
+       // 服务器地址
+       'hostname' => 'rm-2zes3163514jk3a9zo.mysql.rds.aliyuncs.com',
+       // 数据库名
+       'database' => 'zhcdb',
+       // 数据库用户名
+       'username' => 'web247',
+       // 数据库密码
+       'password' => 'kCdcGHhOy9TtDOEt',
+       // 数据库编码默认采用utf8
+       'charset' => 'utf8',
+       // 端口
+       'hostport'        => '3306',
+       // 数据库表前缀
+       'prefix' => '',
+     ],
+
     // +----------------------------------------------------------------------
     // | Cookie设置
     // +----------------------------------------------------------------------

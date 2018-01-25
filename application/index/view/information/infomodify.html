@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>智慧程后台管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> {include file="inccss" /}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+        @media (min-width: 992px) {
+            .col-md-6 {
+                width: 100%;
+            }
+        }
+
+        .form-control {
+            display: inline-block;
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            {include file="header" /}
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            {include file="leftmenu" /}
+        </aside>
+        <!-- 管理员列表页 -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    资讯详情
+                    <!-- <small>Preview</small> -->
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> 首页</a>
+                    </li>
+                    <li>
+                        <a href="informationList.html"> 资讯管理</a>
+                    </li>
+                    <li class="active">资讯详情</li>
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">详情</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                              <div class="box-body">
+                                <div class="box-body">
+                                    <div class="form-group" >
+                                       <label style="display: inline-block;">类型</label>
+                                       <select class="form-control select2" style="display: inline-block;width:100%;" id="select">
+                                           <?php foreach($list as $k=>$v){?>
+                                             <option value="<?php echo $v['id']?>" <?php if($v['id']==$detail['typeid']){echo "selected";}?>><?php echo $v['names']?></option>
+                                           <?php }?>
+                                       </select>
+                                    </div>
+                                    <div class="form-group" >
+                                       <label style="display: inline-block;">题目</label><br>
+
+                                       <input type="text" class="form-control" id="title" value="{$detail.titles}" style="display: inline-block;" class="col-xs-2"></input>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <span>添加时间：</span>
+                                            <span style="font-weight:normal;">{$detail.instime}</span>
+                                        </label>
+                                    </div>
+                                    <input type="hidden" value="<?php echo $newsid?>" id="hid">
+                           
+                                    <textarea name='' id='container' style="height:430px;width:100%;">{$detail.conts}</textarea>
+                                    
+                                    <!-- 配置文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
+                                    <!-- 编辑器源码文件 -->
+                                    <script type="text/javascript" src="/ueditor/ueditor.all.js"></script>
+                                      <!-- 实例化编辑器 -->
+                                    <script type="text/javascript">
+                                      var ue = UE.getEditor('container');
+                                    </script>
+                                    
+                                      <label for="exampleProvince"></label>
+                                      <button class="btn btn-primary btn-block btn-flat" id="confirmadd">修改</button>                             
+                                </div>
+                              </div>
+                            </form>
+                        </div>
+                        <!-- /.box -->
+                        <!-- Input addon -->
+                        
+                        <!-- /.box -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                   
+                    <!--/.col (right) -->
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        {include file="footer" /}
+        <!-- Control Sidebar -->
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 3 -->
+    {include file="incjs" /}
+    <!-- page script -->
+    <script>
+        $(function () {
+            // 当前下拉效果
+            $(".treeview").eq(3).addClass('active').siblings().removeClass('active');
+            $(".treeview").eq(3).addClass('menu-open').siblings().removeClass('menu-open');
+            $(".treeview").eq(3).children('.treeview-menu').children('li').eq(0).addClass('active').siblings().removeClass(
+                'active');
+            //Initialize Select2 Elements
+            $('.select2').select2();
+
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true
+            });
+
+            //iCheck for checkbox and radio inputs
+            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                checkboxClass: 'icheckbox_minimal-blue',
+                radioClass: 'iradio_minimal-blue'
+            })
+
+
+            $('#confirmadd').click(function(){
+                  
+                  var typeid=$('#select').val();
+                  var title=$('#title').val();
+                  var newsid=$('#hid').val();
+                  var con=UE.getEditor('container').getContent();
+                  if(title==""){
+                     alert('请填写标题');
+                  }
+                  else if (!UE.getEditor('container').hasContents()){
+                     alert('请填写内容!');
+                  }else{
+
+                     $.post("/index/information/gainews",{
+
+                         id:typeid,
+                         name:title,
+                         content:con,
+                         newsid:newsid
+                     },function(data){
+                     
+                        if(data.status==1){
+
+                           alert(data.msg);
+                           window.location.href="/index/information/informationlist";
+                           
+                        }else{
+                           alert(data.msg);
+
+                        }
+
+
+                     });
+                   
+                  }
+
+
+            });
+        })
+    </script>
+</body>
+
+</html>

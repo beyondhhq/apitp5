@@ -14,7 +14,7 @@ class User extends Domain
                }
             }
     	    $this->assign("data",$res);
-			return view('studentList');
+			return view('studentlist');
     }
     public function teacherList()
     {       
@@ -28,7 +28,7 @@ class User extends Domain
             }
     	    $this->assign("data",$res);
 			
-			return view('teacherList');
+			return view('teacherlist');
     }
     public function parentList()
     {       
@@ -40,7 +40,7 @@ class User extends Domain
                }
             }
     	    $this->assign("data",$res);
-			return view('parentList');
+			return view('parentlist');
     }
     public function studentDetail()
     {       
@@ -49,7 +49,7 @@ class User extends Domain
     	    $res=$this->D('users')->alias('u')->field('u.*,us.stuid,us.schoolold,us.scoreold,s.names as schname')->where($where)->join("users_student us",'u.id=us.uid')->join("schools s","u.schid=s.id")->find();
     	    $res['instime']=date("Y-m-d",$res['instime']);
             $this->assign("data",$res);
-			return view('studentDetail');
+			return view('studentdetail');
     }
     public function teacherDetail()
     {       
@@ -58,7 +58,7 @@ class User extends Domain
     	    $res=$this->D('users')->alias('u')->where($where)->field("u.*,s.names as schname")->join("schools s","u.schid=s.id")->find();
 
             $this->assign("data",$res);
-			return view('teacherDetail');
+			return view('teacherdetail');
     }
     public function parentDetail()
     {       
@@ -77,7 +77,7 @@ class User extends Domain
     	    }
     	   
             $this->assign("data",$res);
-			return view('parentDetail');
+			return view('parentdetail');
     }
   
 }

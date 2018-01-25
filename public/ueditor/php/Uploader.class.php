@@ -7,6 +7,8 @@
  * Time: 上午11: 32
  * UEditor编辑器通用上传类
  */
+require_once  __DIR__.'/OssInUe.php';
+// require_once  __DIR__.'/OSS/Core/OssException.php';
 class Uploader
 {
     private $fileField; //文件域名
@@ -88,6 +90,8 @@ class Uploader
             return;
         }
 
+        
+
         $this->oriName = $file['name'];
         $this->fileSize = $file['size'];
         $this->fileType = $this->getFileExt();
@@ -108,21 +112,44 @@ class Uploader
             return;
         }
 
-        //创建目录失败
-        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
-            $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
-            return;
-        } else if (!is_writeable($dirname)) {
-            $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
-            return;
-        }
-
+         // //创建目录失败
+         // if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
+         //     $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
+         //     return;
+         // } else if (!is_writeable($dirname)) {
+         //     $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
+         //     return;
+         // }
+        
         //移动文件
-        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
-            $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
-        } else { //移动成功
-            $this->stateInfo = $this->stateMap[0];
-        }
+        // if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
+        //     $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
+        // } else { //移动成功
+        //     $this->stateInfo = $this->stateMap[0];
+        // }
+       //          $entension = $this->getFileExt(); //上传文件的后缀
+       //          $newName = date('YmdHis').mt_rand(100000,999999).$entension;//上传到oss的文件名
+       //          $accessKeyId = 'LTAIKU3s9BpRtu1j';//AK
+       //          $accessKeySecret = 'hzR3f2aOTEcsF4m9KsOEqH39GHMH8o';//Secret
+       //          $endpoint = 'oss-cn-beijing.aliyuncs.com';//域名
+       //          $bucket= 'zhctest';//" <您使用的Bucket名字，注意命名规范>";
+       //          $object = "image/".$newName;//" <您使用的Object名字，注意命名规范>";
+       //          $content = $file["tmp_name"];//上传的文件
+       // $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+       // $res=$ossClient->uploadFile($bucket, $object, $content);
+       // 
+       
+         $ossInUe = new OssInUe();
+         $config = $this->config;
+         $type=$config['pathFormat'];
+         $obj = $ossInUe->uploadToAliOSS($file,$this->fileType,$type);
+          if ($obj['status'] == true){
+              $this->fullName = $obj['path'];
+              $this->stateInfo = $this->stateMap[0];
+          }else{
+              $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
+          }
+        
     }
 
     /**

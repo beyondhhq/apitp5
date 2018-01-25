@@ -15,6 +15,7 @@
   <![endif]-->
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="/static/dist/css/gaokaoxinxi-detail.css">
     <style>
         @media (min-width: 992px) {
             .col-md-6 {
@@ -27,6 +28,7 @@
             width: 80%;
         }
     </style>
+    
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -65,37 +67,41 @@
                     <div class="col-md-6">
                         <!-- general form elements -->
                         <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">详情</h3>
-                            </div>
+                            
                             <!-- /.box-header -->
                             <!-- form start -->
-                            <form role="form">
-                                <div class="box-body">
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleType">类型：</label>学业生涯规划
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleTitle">题目：</label>XXXXXX
-                                    </div>
-                                    <div class="form-group" style="width: 40%;">
-                                        <label for="exampleContent">内容：</label>讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发讲的是打瞌睡
-                                        是绝地反击是方略发讲的是打瞌睡 是绝地反击是方略发
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            <span>添加时间：</span>
-                                            <span style="font-weight:normal;">2017-11-20 10:20</span>
-                                        </label>
-
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="zhengwen">
+                               <div class="ww beijing">
+			                     <div class="top">
+                                   <p>{$detail.titles}</p>
+                                   <p class="time" style="text-align: center;font-size: 16px;color: #555;display: inline-block;margin:20px 10px 0px 10px;">发布时间：{$detail.instime} 
+                                   </p>
+                                   <?php if($detail['source']!=""){?>
+                                       <p class="laiyuan" style="text-align: right;font-size: 16px;color: #555;display: inline-block;margin:20px 10px 0px 10px;">来源：<?php echo $detail['source']?></p>
+                                   
+                                   <?php }?>
+                                   
+                                 </div>
+			                     <div class="btom">{$detail.conts}
+                                 
+                                  <?php if($detail['video']!=""){?>
+                                       <div id="player-container" style="width:600px;height:335px;margin:0 auto">
+                                       
+                                          <object type="application/x-shockwave-flash" name="player" data="http://www.yxke12.com/Public/Home/images/flash/<?php echo $detail['video']?>" width="600" height="335" id="player" style="visibility: visible;">
+                                            <param name="allowFullScreen" value="true">
+                                            <param name="allowScriptAccess" value="always">
+                                            <param name="bgcolor" value="#000000">
+                                            <param name="flashvars" value="configuration=&amp;javascriptCallbackFunction=onJavaScriptBridgeCreated">
+                                          </object>
+                                       </div>
+                                   
+                                   <?php }?>
+                                 
+                                 
+                                 </div>
+           
+                               </div>
+                            </div>
                         </div>
                         <!-- /.box -->
                         <!-- Input addon -->
@@ -143,8 +149,49 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             })
+
+
+            $('#confirmadd').click(function(){
+                  
+                  var typeid=$('#select').val();
+                  var title=$('#title').val();
+                  var newsid=$('#hid').val();
+                  var con=UE.getEditor('container').getContent();
+                  if(title==""){
+                     alert('请填写标题');
+                  }
+                  else if (!UE.getEditor('container').hasContents()){
+                     alert('请填写内容!');
+                  }else{
+
+                     $.post("/index/information/gainews",{
+
+                         id:typeid,
+                         name:title,
+                         content:con,
+                         newsid:newsid
+                     },function(data){
+                     
+                        if(data.status==1){
+
+                           alert(data.msg);
+                           window.location.href="/index/information/informationlist";
+                           
+                        }else{
+                           alert(data.msg);
+
+                        }
+
+
+                     });
+                   
+                  }
+
+
+            });
         })
     </script>
+    
 </body>
 
 </html>

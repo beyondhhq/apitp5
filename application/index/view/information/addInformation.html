@@ -38,7 +38,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    添加资讯
+                    添加图文
                     <!-- <small>Preview</small> -->
                 </h1>
                 <ol class="breadcrumb">
@@ -46,7 +46,7 @@
                         <a href="#">
                             <i class="fa fa-dashboard"></i> 首页</a>
                     </li>
-                    <li class="active">添加资讯</li>
+                    <li class="active">添加图文</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -61,14 +61,14 @@
                             </div>
                             <!-- /.box-header -->
                             <!-- form start -->
-
+                          <div class="box-body">
                             <div class="box-body">
                                 <div class="form-group" >
                                     <label style="display: inline-block;">类型</label>
 
                                     <select class="form-control select2" style="display: inline-block;width:100%;" id="select">
                                         <?php foreach($list as $k=>$v){?>
-                                          <option value="<?php echo $v['id']?>"><?php echo $v['names']?></option>
+                                          <option value="<?php echo $v['id']?>"><?php echo $v['name']?></option>
                                         <?php }?>
                                     </select>
                                 </div>
@@ -91,15 +91,28 @@
                                     <script type="text/javascript" src="/ueditor/ueditor.all.js"></script>
                                       <!-- 实例化编辑器 -->
                                     <script type="text/javascript">
-                                      var ue = UE.getEditor('container');
+                                      var ue = UE.getEditor('container',{    
+        //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个    
+        toolbars:[['undo', 'redo', '|',
+            'bold',  
+            'simpleupload', 'insertimage']],    
+        //focus时自动清空初始化时的内容    
+        autoClearinitialContent:true,    
+        //关闭字数统计    
+        wordCount:false,    
+        //关闭elementPath    
+        elementPathEnabled:false,    
+        //默认的编辑区域高度    
+        initialFrameHeight:300    
+        //更多其他参数，请参考ueditor.config.js中的配置项    
+    });
                                     </script>
                                     
                                       <label for="exampleProvince"></label>
                                       <button class="btn btn-primary btn-block btn-flat" id="confirmadd">确认添加</button>
 
                             </div>
-                            <!-- /.box-body -->
-
+                          </div>
                         </div>
 
                        
