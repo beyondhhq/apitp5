@@ -57,6 +57,23 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
+                            <form action="/index/user/teacherlist" method="get" >   
+		        
+
+		        <div class="col-md-11" >
+			          <div class="form-group">
+                        <label>关键字搜索</label>
+                        <input type="text" class="form-control" name="biaoti" placeholder="请输入标题关键字" value="">
+                      </div>
+		        </div>
+                <div class="col-md-1" >
+			          <div class="form-group">
+                        <label>搜索</label>
+                        <button type="submit" class="btn btn-block btn-success">搜索</button>
+                      </div>
+		        </div>
+                
+               <form>
                             <div class="box-header">
                                 <h3 class="box-title">教师列表</h3>
                             </div>
@@ -69,7 +86,7 @@
                                             <th>教师ID</th>
                                             <th>教师姓名</th>
                                             <th>所在学校</th>
-                                            <th>注册日期</th>
+                                          
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -80,7 +97,7 @@
                                             <td><?php echo $v['id']?></td>
                                             <td><?php echo $v['sname']?></td>
                                             <td><?php echo $v['schname']?></td>
-                                            <td><?php echo $v['instime']?></td>
+                                            
                                             <td><a href="teacherDetail.html?id=<?php echo $v['id']?>">详情</a></td>
                                            </tr>
                                                         
@@ -96,6 +113,7 @@
                                         </tr>
                                     </tfoot> -->
                                 </table>
+                                <div id="fenye">{$data->render()}</div>
                             </div>
                             <!-- /.box-body -->
                         </div>
