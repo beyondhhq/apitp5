@@ -1,11 +1,11 @@
 <?php
 namespace app\index\controller;
-
+use think\Db;
 class User extends Domain
 {
     public function studentList()
     {       
-    	    $where['usertype']=1;
+    	    /*$where['usertype']=1;
     	    $res=$this->D('users')->alias('u')
 ->where($where)->field('u.id,u.names as sname,u.instime,s.names as schname')->join("schools s","u.schid=s.id")->select();
             if($res){
@@ -13,7 +13,11 @@ class User extends Domain
                     $res[$k]['instime']=date("Y-m-d",$v['instime']);
                }
             }
-    	    $this->assign("data",$res);
+    	    $this->assign("data",$res);*/
+    	    $res=Db::connect('db2')->name('student')->alias('u')
+->field('u.StudentID as id,u.StudentName as sname,u.Birthday as instime,s.SchoolID as schname')->join("school s","u.SchoolID=s.SchoolID")->select();
+          
+            $this->assign("data",$res);
 			return view('studentlist');
     }
     public function teacherList()
