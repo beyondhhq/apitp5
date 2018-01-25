@@ -80,7 +80,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <?php foreach($list as $k=>$v){?>
+                                       <?php if(empty($list)){}else{foreach($list as $k=>$v){?>
                                         <tr>
                                             <td><?php echo $k+1;?></td>
                                             <td><?php echo $v['id'];?></td>
@@ -91,7 +91,7 @@
                                                 <button>修改</button>
                                             </td>
                                         </tr>
-                                        <?php }?>
+                                        <?php }}?>
                                     </tbody>
                                     <!-- <tfoot>
                                         <tr>
