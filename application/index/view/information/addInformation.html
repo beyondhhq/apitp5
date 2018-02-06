@@ -83,7 +83,7 @@
                                   <div class="form-group">
                                    <label>适度年级</label>
                                      <select class="form-control select2" style="display: inline-block;width:100%;"  tabindex="-1" aria-hidden="true" name="select">
-                                       <option selected="selected" value=0>高中整个年级</option>
+                                       <option selected="selected" value=0>高中所有年级</option>
                                        <option selected="selected" value=0>高一</option>
                                        <option selected="selected" value=0>高二</option>
                                        <option selected="selected" value=0>高三</option> 
@@ -125,7 +125,7 @@
                             <!-- /.box-header -->
                             <div class="box-body pad" >
                                 <div class="col-md-12">
-                                    <label style="display: inline-block;" >正文</label>
+                                    <label style="display: inline-block;" id="zhengwen">正文</label>
                                     <div id="container"  name="content" type="text/plain" style="height:420px;width:100%;">
                                         
                                     </div>
@@ -152,23 +152,35 @@
         //更多其他参数，请参考ueditor.config.js中的配置项    
     });
                                     </script>
-                                    <div class="col-md-12" >
-                                        <div class="form-group" >
-                                           <label style="display: inline-block;"></label>
-                                           <label style="display: inline-block;">封面图片</label>
+                                    <div class="col-md-12" id="tianchong" >
+                                        
+                                        <!-- <div class="form-group" >
+                                           <label style="display: inline-block;">学生姓名</label>
 
-                                           <input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                           <input type="text" class="form-control" id="stuname" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
                                         </div>
                                         <div class="form-group" >
-                                           <label style="display: inline-block;">题目</label>
+                                           <label style="display: inline-block;">图片1</label>
 
-                                           <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                           <input type="file" class="form-control" name="pic1" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
                                         </div>
                                         <div class="form-group" >
-                                           <label style="display: inline-block;">题目</label>
+                                           <label style="display: inline-block;">图片2</label>
 
-                                           <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                           <input type="file" class="form-control" name="pic1" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
                                         </div>
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;">图片3</label>
+
+                                           <input type="file" class="form-control" name="pic1" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+ -->
+                                  
+                                
+
+                                
+                                
+                                   
                                     </div>
                                     <div class="col-md-12">
                                       
@@ -262,19 +274,22 @@
                   
                     var id=$('#select').val();
                      
+                     if(id==27){
+                        $('#zhengwen').html('推荐理由');
+                     }
 
                      $.post("/index/information/returncon",{
 
                          id:id   
 
                      },function(data){
-                        
-                        if(data==0){
+                       
+                        if(data==2){
                         
                            alert('此类型下还有子类型,请选择最终类型！');
 
                         }else{
-
+                           $('#tianchong').html(data);
 
                         }
 

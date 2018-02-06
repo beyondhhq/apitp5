@@ -416,17 +416,86 @@ class Information extends Domain
       $request=request();
       $id=$request->post('id');
       $where['id']=$id;
-      $res=$this->D('news_type')->where($where)->field('tablename')->find();
+      $res=$this->D('news_type')->where($where)->field('tablename,conditionone,valueone')->find();
       $tablename=$res['tablename'];
       if($tablename){
         if($tablename=="teacher_zyfz"||$tablename=="teacher_xsczzd"){
+                                 $data='<div class="form-group" ><label style="display: inline-block;">封面图片</label><input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">作者</label><input type="text" class="form-control" id="zuozhe" placeholder="请输入作者姓名" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">作者所在学校</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入作者所在学校" style="display: inline-block;" class="col-xs-2"></div>';
+
+
+        }elseif($tablename=="d_mentality"){
+            if($res['valueone']==1){
+               $data='<div class="form-group" >
+                                           
+                                           <label style="display: inline-block;">封面图片</label>
+
+                                           <input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>';
+            }elseif($res['valueone']==2){
+
+                $data='<div class="form-group" ><label style="display: inline-block;">封面图片</label><input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">列表页标题</label><input type="text" class="form-control" id="zuozhe" placeholder="请输入列表页标题" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">第三标题</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入第三标题" style="display: inline-block;" class="col-xs-2"></div>';
+
+            }elseif($res['valueone']==3){
+                $data='<div class="form-group" ><label style="display: inline-block;">封面图片</label><input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">学生姓名</label><input type="text" class="form-control" id="zuozhe" placeholder="请输入学生姓名" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">学生所在学校</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入学生所在学校" style="display: inline-block;" class="col-xs-2"></div>';
+
+
+            }
+
+        }elseif($tablename=="da_society"||$tablename=="p_volunteer_encyclopedia_three"||$tablename=="p_volunteer_encyclopedia_two"){
+             
+             $data='<div class="form-group" ><label style="display: inline-block;">来源</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入资讯来源" style="display: inline-block;" class="col-xs-2"></div>';
+
+
+        }elseif($tablename=="jilufanli"){
+             
+               $data='<div class="form-group" >
+                                           <label style="display: inline-block;">学生姓名</label>
+
+                                           <input type="text" class="form-control" id="stuname" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;">图片1</label>
+
+                                           <input type="file" class="form-control" name="pic1" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;">图片2</label>
+
+                                           <input type="file" class="form-control" name="pic1" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;">图片3</label>
+
+                                           <input type="file" class="form-control" name="pic1" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>';
 
 
 
+
+
+        }elseif($tablename=="books"){
+
+             $data='<div class="form-group" ><label style="display: inline-block;">封面图片</label><input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">作者名</label><input type="text" class="form-control" id="zuozhe" placeholder="请输入作者名" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">出版社</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入出版社" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">出版年月</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入出版年月" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">价格</label><input type="text" class="form-control" id="zuozheschool" placeholder="请输入价格￥" style="display: inline-block;" class="col-xs-2"></div>';
+
+
+
+        }elseif($tablename=="recruit_advisory"){
+
+             $data='<div class="form-group" ><label style="display: inline-block;">封面图片</label><input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2"></div><div class="form-group" ><label style="display: inline-block;">来源</label><input type="text" class="form-control" id="zuozhe" placeholder="请输入资讯来源" style="display: inline-block;" class="col-xs-2"></div>';
+
+        }elseif($tablename=="parent_jyks"||$tablename=="parent_ztjz"){
+
+             $data='<div class="form-group" ><label style="display: inline-block;">封面图片</label><input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2"></div>';
+
+
+        }else{
+
+        	$data="";
         }
 
+
       }else{
-        $data=0;
+        $data=2;
         
       }
       return $data;
