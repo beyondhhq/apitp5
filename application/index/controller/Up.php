@@ -1,34 +1,46 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
-
-use OSS\OssClient;
-use OSS\Core\OssException;
+use think\Db;
 class Up extends Controller
 {   
+    
+    public function card(){
+      
+        set_time_limit(0);
+        vendor("PHPExcel.PHPExcel");
+     
+        //上传文件的地址
+        $filename = 'E:\\2.xlsx';
 
-    public function upload(){
-      echo "<pre>";
-                $file=$_FILES['upload'];
-            
-                //$entension = $fileType; //上传文件的后缀
-                $newName=$file['name'];
-                //$newName = date('YmdHis').mt_rand(100000,999999).".".$entension;//上传到oss的文件名
-                $accessKeyId = 'LTAIKU3s9BpRtu1j';//AK
-                $accessKeySecret = 'hzR3f2aOTEcsF4m9KsOEqH39GHMH8o';//Secret
-                $endpoint = 'oss-cn-beijing.aliyuncs.com';//域名
-                $bucket= 'zhctest';//" <您使用的Bucket名字，注意命名规范>";
-                $object = "image/".$newName;//" <您使用的Object名字，注意命名规范>";
-                $content = $file["tmp_name"];//上传的文件
-       $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-       $res=$ossClient->uploadFile($bucket, $object, $content);
-       
+        //判断截取文件
+        $extension = 'xlsx';
+
+        //区分上传文件格式
+        if($extension == 'xlsx') {
+            $objReader =\PHPExcel_IOFactory::createReader('Excel2007');
+            $objPHPExcel = $objReader->load($filename, $encode = 'utf-8');
+        }else if($extension == 'xls'){
+            $objReader =\PHPExcel_IOFactory::createReader('Excel5');
+            $objPHPExcel = $objReader->load($filename, $encode = 'utf-8');
+        }
+        $arr = $objPHPExcel->getsheet(0)->toArray();   //转换为数组格式
+        $db=Db::connect('db2');
+        foreach($arr as $k=>$v){
+           $data['isuse']=1;
+           $where['card_number']=$v[0];
+           $res=$db->name('activation')->where($where)->update($data);
+           $count=$k+1;
+           if($res){
+             echo "第".$count."条数据设置成功";echo "<br>";
+
+           }else{
+
+             echo "第".$count."条数据设置失败";echo "<br>";
+           }
+        }
+        
     }
-    public function up(){
-
-       return $this->fetch('up/up');
-
-
-    }
+   
     
 }

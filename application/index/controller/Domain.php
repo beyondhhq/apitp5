@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
-use think\Db;
 class Domain extends Controller {
     /* 权限认证 */
 	public function _initialize(){

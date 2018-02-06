@@ -64,7 +64,7 @@
 		        <div class="col-md-11" >
 			          <div class="form-group">
                         <label>关键字搜索</label>
-                        <input type="text" class="form-control" name="biaoti" placeholder="请输入标题关键字" value="">
+                        <input type="text" class="form-control" name="biaoti" placeholder="请输入标题关键字" value="<?php if(!empty($biaoti)){echo $biaoti;}?>">
                       </div>
 		        </div>
                 <div class="col-md-1" >
@@ -86,6 +86,8 @@
                                             <th>序号</th>
                                             <th>学生ID</th>
                                             <th>学生姓名</th>
+                                            <th>登录账号</th>
+                                            <th>电话</th>
                                             <th>所在学校</th>
                                             <th>操作</th>
                                         </tr>
@@ -96,9 +98,11 @@
                                            <tr>
                                             <td><?php echo $k+1?></td>
                                             <td><?php echo $v['id']?></td>
-                                            <td><?php echo $v['sname']?></td>
-                                            <td><?php echo $v['schname']?></td>
-                                            <td><a href="studentDetail.html?id=<?php echo $v['id']?>">详情</a></td>
+                                            <td><?php if($v['sname']){echo $v['sname'];}else{echo "未填写";}?></td>
+                                            <td><?php if($v['LoginName']){echo $v['LoginName'];}else{echo "未填写";}?></td>
+                                            <td><?php if($v['Tel']){echo $v['Tel'];}else{echo "未填写";}?></td>
+                                            <td><?php if($v['schname']){echo $v['schname'];}else{echo "未填写";}?></td>
+                                            <td><a href="studentdetail.html?id=<?php echo $v['id']?>">详情</a></td>
                                            </tr>
                                                         
                                         <?php }?>

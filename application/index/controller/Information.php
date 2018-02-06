@@ -26,11 +26,11 @@ class Information extends Domain
             $this->assign('list',$result);
             
     	      $where['n.isdel']=0;
-            $res=$this->D('news')->alias('n')->where($where)->field('n.*,nt.names as typename')->join('news_type nt','n.typeid=nt.id')->order('n.instime desc')->paginate(10,false,$pageParam)->each(function($item, $key){
+            $res=$this->D('news')->alias('n')->where($where)->field('n.*,nt.names as typename')->join('news_type nt','n.typeid=nt.id','left')->order('n.instime desc')->paginate(15,false,$pageParam)->each(function($item, $key){
                      $item['instime'] = date('Y-m-d',$item['instime']);
                      return $item;
                      });
-           
+     
             $this->assign('lists',$res);
             return $this->fetch('informationlist');
     }
@@ -102,10 +102,6 @@ class Information extends Domain
             }
             $this->assign('list',$result);
             return $this->fetch('infotype');
-
-
-
-
 
     }
     private function GetTree($arr,$pid,$step){
@@ -414,6 +410,26 @@ class Information extends Domain
       }
       
       echo  $cid;
+   }
+   public function returncon(){
+       
+      $request=request();
+      $id=$request->post('id');
+      $where['id']=$id;
+      $res=$this->D('news_type')->where($where)->field('tablename')->find();
+      $tablename=$res['tablename'];
+      if($tablename){
+        if($tablename=="teacher_zyfz"||$tablename=="teacher_xsczzd"){
+
+
+
+        }
+
+      }else{
+        $data=0;
+        
+      }
+      return $data;
    }
      
 }

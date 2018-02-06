@@ -80,7 +80,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <?php if(empty($list)){}else{foreach($list as $k=>$v){?>
+                                       <?php if($list){foreach($list as $k=>$v){?>
                                         <tr>
                                             <td><?php echo $k+1;?></td>
                                             <td><?php echo $v['id'];?></td>

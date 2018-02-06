@@ -21,6 +21,11 @@
             display: none;
         }
     </style>
+    <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({ minDate: -20, maxDate: "+1M +10D" });
+  });
+  </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -63,7 +68,8 @@
                             <!-- form start -->
                           <div class="box-body">
                             <div class="box-body">
-                                <div class="form-group" >
+                                <div class="col-md-12">
+                                  <div class="form-group" >
                                     <label style="display: inline-block;">类型</label>
 
                                     <select class="form-control select2" style="display: inline-block;width:100%;" id="select">
@@ -71,20 +77,59 @@
                                           <option value="<?php echo $v['id']?>"><?php echo $v['name']?></option>
                                         <?php }?>
                                     </select>
+                                  </div>
                                 </div>
-                                <div class="form-group" >
-                                    <label style="display: inline-block;">题目</label>
+                                <div class="col-md-4"  >
+                                  <div class="form-group">
+                                   <label>适度年级</label>
+                                     <select class="form-control select2" style="display: inline-block;width:100%;"  tabindex="-1" aria-hidden="true" name="select">
+                                       <option selected="selected" value=0>高中整个年级</option>
+                                       <option selected="selected" value=0>高一</option>
+                                       <option selected="selected" value=0>高二</option>
+                                       <option selected="selected" value=0>高三</option> 
+                                     </select>
+                                  </div>
+                                </div>
 
-                                    <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                <div class="col-md-4" >
+                                    <div class="form-group">
+                                     <label>是否热门</label>
+                                       <select class="form-control select2" style="display: inline-block;width:100%;"  tabindex="-1" aria-hidden="true" name="select">
+                                        <option selected="selected" value=0>否</option>
+                                        <option selected="selected" value=0>是</option>  
+                                       </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" >
+                                    <div class="form-group">
+                                     <label>发表时间</label>
+                                     <input type="text" id="datepicker" class="form-control"  placeholder="请选择时间" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                     <label style="display: inline-block;">题目</label>
+
+                                     <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                     <label style="display: inline-block;">内容简介</label>
+
+                                     <textarea  class="form-control" id="sample" placeholder="请输入内容简介" style="display: inline-block;" class="col-xs-2"></textarea>
+                                    </div>
                                 </div>
                             </div>
                             
                             <!-- /.box-header -->
-                            <div class="box-body pad">
-                          
-                                    <div id="container" name="content" type="text/plain" style="height:420px;width:100%;">
+                            <div class="box-body pad" >
+                                <div class="col-md-12">
+                                    <label style="display: inline-block;" >正文</label>
+                                    <div id="container"  name="content" type="text/plain" style="height:420px;width:100%;">
                                         
                                     </div>
+                                </div>
                                     <!-- 配置文件 -->
                                     <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
                                     <!-- 编辑器源码文件 -->
@@ -107,10 +152,28 @@
         //更多其他参数，请参考ueditor.config.js中的配置项    
     });
                                     </script>
-                                    
-                                      <label for="exampleProvince"></label>
-                                      <button class="btn btn-primary btn-block btn-flat" id="confirmadd">确认添加</button>
+                                    <div class="col-md-12" >
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;"></label>
+                                           <label style="display: inline-block;">封面图片</label>
 
+                                           <input type="file" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;">题目</label>
+
+                                           <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+                                        <div class="form-group" >
+                                           <label style="display: inline-block;">题目</label>
+
+                                           <input type="text" class="form-control" id="title" placeholder="题目名称" style="display: inline-block;" class="col-xs-2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                      
+                                      <button class="btn btn-primary btn-block btn-flat" id="confirmadd" >确认添加</button>
+                                    </div>
                             </div>
                           </div>
                         </div>
@@ -194,8 +257,37 @@
 
 
             });
+            $('#select').change(function(){
+                  
+                  
+                    var id=$('#select').val();
+                     
+
+                     $.post("/index/information/returncon",{
+
+                         id:id   
+
+                     },function(data){
+                        
+                        if(data==0){
+                        
+                           alert('此类型下还有子类型,请选择最终类型！');
+
+                        }else{
+
+
+                        }
+
+
+                     });
+                   
+                  
+
+
+            });
         })
     </script>
+    
 </body>
 
 </html>

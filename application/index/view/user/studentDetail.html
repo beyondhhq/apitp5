@@ -14,6 +14,12 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
     <!-- Google Font -->
+    
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  
+   <link rel="stylesheet" href="jqueryui/style.css">
+    
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
         @media (min-width: 992px) {
@@ -27,6 +33,11 @@
             width: 80%;
         }
     </style>
+    <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({ minDate: -20, maxDate: "+1M +10D" });
+  });
+  </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -68,59 +79,64 @@
                            <div style="margin:15px">
                              <h3 class="box-title">详情</h3>
                            </div>
-                           <div class="box-body">
+                            <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                                     
                                     <tbody>
                                         <tr>
                                             <th>姓名</th>
-                                            <th><font color="blue">{$detail.names}</font></th>
+                                            <th colspan="2"><font color="blue"><?php if($detail['names']){echo $detail['names'];}else{echo "未填写";}?></font></th>
                                             <th>用户名</th>
-                                            <th><font color="blue">{$detail.loginname}</font></th>
+                                            <th><font color="blue"><?php if($detail['loginname']){echo $detail['loginname'];}else{echo "未填写";}?></font></th>
                                         </tr>
                                         <tr>
                                             <th>电话</th>
-                                            <th><font color="blue">{$detail.tel}</font></th>
+                                            <th colspan="2"><font color="blue"><?php if($detail['tel']){echo $detail['tel'];}else{echo "未填写";}?></font></th>
+                                            
                                             <th>学校</th>
-                                            <th><font color="blue">{$detail.school}</font></th>
+                                            <th><font color="blue"><?php if($detail['school']){echo $detail['school'];}else{echo "未填写";}?></font></th>
                                             
                                             
                                         </tr>
                                       
                                         <tr>
                                             <th>账号是否有效</th>
-                                            <th ><font color="blue"><?php if($detail['valid']==1){echo "有效";}else{echo "无效";}?></th>
+                                            <th colspan="2" ><font color="blue"><?php if($detail['valid']==1){echo "有效";}else{echo "无效";}?></th>
+                                     
                                             <th>性别</th>
-                                            <th ><font color="blue">{$detail.sex}</th>
+                                            <th ><font color="blue"><?php if($detail['sex']){echo $detail['sex'];}else{echo "未填写";}?></th>
                                         </tr>
                                         <tr>
                                             <th>文理科</th>
-                                            <th ><font color="blue">{$detail.type}</th>
+                                            <th colspan="2"><font color="blue"><?php if($detail['type']){echo $detail['type'];}else{echo "未填写";}?></th>
+                                           
                                             <th>所在地区</th>
-                                            <th ><font color="blue">{$detail.xian}</th>
+                                            <th ><font color="blue"><?php if($detail['xian']){echo $detail['xian'];}else{echo "未填写";}?></th>
                                         </tr> 
                                         <tr>
                                             <th>使用截止日期</th>
-                                            <th ><font color="blue"><?php if($detail['deaddate']==0){echo "无";}else{echo $detail['deaddate'];}?></th>
+                                            <th ><p><input type="text" id="datepicker" value="<?php if($detail['deaddate']==0){echo "无";}else{echo $detail['deaddate'];}?>"></p></th>
+                                            <th class="col-md-1"><button type="button" id="modifytime" class="btn bg-maroon">修改日期</button></th>
                                             <th>是否支付</th>
                                             <th ><font color="blue">否</th>
                                         </tr>
                                         <tr>
                                             <th>支付日期</th>
                                             <th ><font color="blue">未支付</th>
+                                            <th></th>
                                             <th>支付金额</th>
                                             <th ><font color="blue">未支付</th>
                                         </tr> 
                                         <tr>
                                             <th>用户状态</th>
-                                            <th colspan="2">
+                                            <th colspan="3">
                                                <div style="margin:6px auto;"> 
                                
 
                                                  <span style="margin:0px 30px 0px 10px;"><input type="radio" value="1" name="r1" class="minimal" <?php if($detail['types']==1){echo "checked";}?>>&nbsp;&nbsp;测试用户</span>
                                                  <span style="margin:0px 30px 0px 30px;"><input type="radio" value="2" name="r1" class="minimal" <?php if($detail['types']==2){echo "checked";}?>>&nbsp;&nbsp;体验用户</span>
                                                  <span style="margin:0px 30px 0px 30px;"><input type="radio" value="3" name="r1" class="minimal" <?php if($detail['types']==3){echo "checked";}?>>&nbsp;&nbsp;vip用户</span>
-                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="4" name="r1" class="minimal" <?php if($detail['types']==0){echo "checked";}?>>&nbsp;&nbsp;其他</span>
+                                                 <span style="margin:0px 30px 0px 30px;"><input type="radio" value="4" name="r1" class="minimal" <?php if($detail['types']==4){echo "checked";}?>>&nbsp;&nbsp;其他</span>
                                                  
 
                                                </div>
@@ -141,12 +157,20 @@
                                     </tfoot> -->
                                 </table>
                                 <label for="exampleProvince"></label>
-                                <button class="btn btn-primary btn-block btn-flat" id="confirmadd">初始化数据</button>
+                                <button class="btn btn-primary " id="initzhuanye" style="width:24%;">初始化性向测试相关数据</button>
+                                <label for="exampleProvince"></label>
+                                <button class="btn btn-primary " id="initxueke" style="width:24%;">初始化学科兴趣测试相关数据</button>
+                                <label for="exampleProvince"></label>
+                                <button class="btn btn-primary " id="initxuanke" style="width:24%;">初始化选科记录数据</button>
+                                <label for="exampleProvince"></label>
+                                <button class="btn btn-primary " id="initzhiyuan" style="width:24%;">初始化模拟填报志愿数据</button>
+                                     
                             </div>
-                            
                         </div>
-                        <!-- /.box -->
-
+                        <!-- /.b
+                        ox -->
+                        
+                        
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -192,6 +216,165 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             })
+			
+			
+			$('#modify').click(function(){
+              var r=confirm("确定要修改吗");
+              if(r==true){
+                 var statusid=$("input[name='r1']:checked").val();
+                 var uid=$("#uid").val();
+                 $.post("/index/user/modifystu",{type:statusid,id:uid},function(data){
+                              if(data.status==1){
+                                alert(data.msg);
+                                window.location.href = "/index/user/studentdetail?id="+uid;
+                              }else{
+
+                                alert(data.msg);
+                              }
+                             })
+                           
+                 
+
+              }
+              
+
+                       
+ 
+
+            })
+            $('#initzhuanye').click(function(){
+              var r=confirm("确定要初始化性向测试相关数据吗？");
+              if(r==true){
+                 
+                 var uid=$("#uid").val();
+                 
+                 $.post("/index/user/initzhuanye",{id:uid},function(data){
+                              if(data.status==1){
+                                alert(data.msg);
+                                window.location.href = "/index/user/studentdetail?id="+uid;
+                              }else{
+
+                                alert(data.msg);
+                              }
+                             })
+                           
+                 
+
+              }
+              
+
+                       
+ 
+
+            })
+            $('#initxuanke').click(function(){
+              var r=confirm("确定要初始化选科记录数据吗？");
+              if(r==true){
+                 
+                 var uid=$("#uid").val();
+                 
+                 $.post("/index/user/initxuanke",{id:uid},function(data){
+                               if(data.status==1){
+                                
+                                 alert(data.msg);
+                                
+                               }else{
+
+                                 alert(data.msg);
+                               }
+                             })
+                           
+                 
+
+              }
+              
+
+                       
+ 
+
+            })
+
+            $('#initxueke').click(function(){
+              var r=confirm("确定要初始化学科兴趣测试相关数据吗？");
+              if(r==true){
+                 
+                 var uid=$("#uid").val();
+                
+                 $.post("/index/user/initxueke",{id:uid},function(data){
+                               if(data.status==1){
+                                
+                                 alert(data.msg);
+                                
+                               }else{
+
+                                 alert(data.msg);
+                               }
+                             })
+                           
+                 
+
+              }
+              
+
+                       
+ 
+
+            })
+			$('#modifytime').click(function(){
+              var r=confirm("确定要修改截止日期吗？");
+              if(r==true){
+                 
+                 var time=$("#datepicker").val();
+				     uid=$("#uid").val();
+                 
+                 $.post("/index/user/stumodifytime",{time:time,id:uid},function(data){
+                               if(data.status==1){
+                                
+                                 alert(data.msg);
+                                
+                               }else{
+
+                                 alert(data.msg);
+                               }
+                             })
+                           
+                 
+
+              }
+              
+
+                       
+ 
+
+            })
+			
+			$('#initzhiyuan').click(function(){
+              var r=confirm("确定要初始模拟志愿填报相关数据吗？");
+              if(r==true){
+                 
+                 var uid=$("#uid").val();
+                 alert(uid);
+                 $.post("/index/user/initzhiyuan",{id:uid},function(data){
+                               if(data.status==1){
+                                
+                                 alert(data.msg);
+                                
+                               }else{
+
+                                 alert(data.msg);
+                               }
+                             })
+                           
+                 
+
+              }
+              
+
+                       
+ 
+
+            })
+			
         })
     </script>
 </body>
